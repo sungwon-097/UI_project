@@ -5,9 +5,9 @@
     -   [UI_project](https://github.com/sungwon-097/UI_project)
     -   Branch
 
-        -   기능개발 : feature\_{dev}
+        -   기능개발 : feature/{dev}
         -   문서 : document
-        -   테스트 : test\_{dev}
+        -   테스트 : test/{dev}
 
     -   Commit
 
