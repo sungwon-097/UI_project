@@ -6,25 +6,20 @@ import kotlin.BuilderInference;
 
 public class Event {
 
-    private Long id;
     private String title;
     private String content;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String intentApp;
 
-    public Event(Long id, String title, String content, LocalDateTime startTime, LocalDateTime endTime, String intentApp) {
-        this.id = id;
+    public Event(String title, String content, LocalDateTime startTime, LocalDateTime endTime, String intentApp) {
         this.title = title;
         this.content = content;
         this.startTime = startTime;
         this.endTime = endTime;
         this.intentApp = intentApp;
     }
-
-    public Long getId() {
-        return id;
-    }
+    public Event(){}
 
     public String getTitle() {
         return title;
