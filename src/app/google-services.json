@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "331774779953",
+    "project_id": "plalarm-333bb",
+    "storage_bucket": "plalarm-333bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331774779953:android:3ae3c6664722d2f8e2ab10",
+        "android_client_info": {
+          "package_name": "com.example.user.plalarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331774779953-d9oa6r80e485dgibovvpqo7biagb6bbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD1Hk9q-BYIIa5sJB6vwT-dHZVcZOxOj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331774779953-d9oa6r80e485dgibovvpqo7biagb6bbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
