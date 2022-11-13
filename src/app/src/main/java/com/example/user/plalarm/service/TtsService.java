@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,16 +18,16 @@ public class TtsService extends AppCompatActivity implements TextToSpeech.OnInit
 
     private TextToSpeech tts;
     private Button speak_out;
-    private EditText input_text;
+    private TextView intentApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); // TODO: 후에 tts 를 사용할 view 로 수정해야함
 
         tts = new TextToSpeech(this, this);
-        speak_out = findViewById(R.id.button);
-        input_text = findViewById(R.id.editText);
+        speak_out = new Button(this);
+        intentApp = new TextView(this);
 
         speak_out.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -37,7 +38,7 @@ public class TtsService extends AppCompatActivity implements TextToSpeech.OnInit
     }
 
     private void speakOut(){
-        CharSequence text = input_text.getText();
+        CharSequence text = intentApp.getText();
         tts.setPitch((float)0.6); // 음성 톤 높이 지정
         tts.setSpeechRate((float)0.1); // 음성 속도 지정
 
