@@ -20,9 +20,9 @@ public class LogoActivity extends AppCompatActivity {
             @Override
             public void run()
             {
-                Intent intent = new Intent(LogoActivity.this, MainActivity.class);
+                Intent intent = new Intent(LogoActivity.this, IntentActivity.class);
                 startActivity(intent);
             }
-        }, 2000);
+        }, 200);
     }
 }
