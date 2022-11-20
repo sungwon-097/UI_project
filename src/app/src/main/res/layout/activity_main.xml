@@ -58,21 +58,46 @@
 
 <!--    이후는 Fragment 작업 영역(미완성)  -->
 
-<!--&lt;!&ndash;    월간 뷰 fragment&ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:name="com.example.user.plalarm.Calendar_Activity"-->
-<!--        android:id="@+id/month_view"-->
-<!--        />-->
+<!--    <TabHost-->
+<!--        android:id="@+id/host"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_centerInParent="true">-->
 
-<!--&lt;!&ndash;    주간 뷰 fragment&ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:name="com.example.user.plalarm.Week_Activity"-->
-<!--        android:id="@+id/week_view"/>-->
+<!--         <LinearLayout-->
+<!--             android:layout_width="match_parent"-->
+<!--             android:layout_height="match_parent"-->
+<!--             android:orientation="vertical">-->
 
-<!--&lt;!&ndash;    일간 뷰 fragment&ndash;&gt;-->
-<!--    <fragment-->
-<!--        android:name="com.example.user.plalarm.Day_Activity"-->
-<!--        android:id="@+id/day_view"/>-->
+<!--             <TabWidget-->
+<!--                 android:id="@android:id/tabs"-->
+<!--                 android:layout_width="match_parent"-->
+<!--                 android:layout_height="wrap_content"-->
+<!--                 android:background="#000000000" />-->
+
+<!--             <FrameLayout-->
+<!--                 android:id="@android:id/tabcontent"-->
+<!--                 android:layout_width="match_parent"-->
+<!--                 android:layout_height="match_parent">-->
+
+                 <!--    월간 뷰 fragment-->
+<!--&lt;!&ndash;                 <fragment&ndash;&gt;-->
+<!--&lt;!&ndash;                     android:id="@+id/month_view"&ndash;&gt;-->
+<!--&lt;!&ndash;                     android:name="com.example.user.plalarm.Calendar_Activity" />&ndash;&gt;-->
+
+                 <!--    주간 뷰 fragment-->
+<!--&lt;!&ndash;                 <fragment&ndash;&gt;-->
+<!--&lt;!&ndash;                     android:id="@+id/week_view"&ndash;&gt;-->
+<!--&lt;!&ndash;                     android:name="com.example.user.plalarm.Week_Activity" />&ndash;&gt;-->
+
+                 <!--    일간 뷰 fragment-->
+<!--&lt;!&ndash;                 <fragment&ndash;&gt;-->
+<!--&lt;!&ndash;                     android:id="@+id/day_view"&ndash;&gt;-->
+<!--&lt;!&ndash;                     android:name="com.example.user.plalarm.Day_Activity" />&ndash;&gt;-->
+
+<!--             </FrameLayout>-->
+<!--         </LinearLayout>-->
+<!--    </TabHost>-->
 
 <!--    일정 생성 버튼-->
     <ImageButton

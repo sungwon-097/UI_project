@@ -1,6 +1,7 @@
 package com.example.user.plalarm;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TabHost;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +37,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         soundButton.setOnClickListener(this);
         settingButton.setOnClickListener(this);
         newButton.setOnClickListener(this);
+
+//        TabHost tabHost = findViewById(R.id.host);
+//        tabHost.setup();
+//
+//        TabHost.TabSpec spec = tabHost.newTabSpec("month");
+//        spec.setIndicator(null, ResourcesCompat.getDrawable(getResources(), R.drawable.month_icon, null));
+//        spec.setContent(R.id.month_view);
+//        tabHost.addTab(spec);
+//
+//        spec = tabHost.newTabSpec("week");
+//        spec.setIndicator(null, ResourcesCompat.getDrawable(getResources(), R.drawable.week_icon, null));
+//        spec.setContent(R.id.week_view);
+//        tabHost.addTab(spec);
+//
+//        spec = tabHost.newTabSpec("day");
+//        spec.setIndicator(null, ResourcesCompat.getDrawable(getResources(), R.drawable.daily_icon, null));
+//        spec.setContent(R.id.day_view);
+//        tabHost.addTab(spec);
     }
 
     @Override
