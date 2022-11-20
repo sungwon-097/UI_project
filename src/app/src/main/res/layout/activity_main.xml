@@ -1,18 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
+<!--    버튼과 이미지를 겹쳐 보이게 구현하려는 Layout-->
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--        소리 활성화,비활성화 전환 버튼-->
+        <Button
+            android:id="@+id/sound_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#00000000" />
+
+<!--        소리 활성화 아이콘-->
+        <ImageView
+            android:id="@+id/notification_on_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:srcCompat="@drawable/notification_on" />
+
+<!--        소리 비활성화 아이콘-->
+        <ImageView
+            android:id="@+id/notification_mute_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/notification_mute" />
+
+    </FrameLayout>
+
+<!--    화면 중앙 위의 아이콘-->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/logo"/>
+
+<!--    설정 버튼-->
+    <ImageButton
+        android:id="@+id/setting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:background="#00000000"
+        android:src="@drawable/setting_icon"/>
+
+<!--    이후는 Fragment 작업 영역(미완성)  -->
+
+<!--&lt;!&ndash;    월간 뷰 fragment&ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:name="com.example.user.plalarm.Calendar_Activity"-->
+<!--        android:id="@+id/month_view"-->
+<!--        />-->
+
+<!--&lt;!&ndash;    주간 뷰 fragment&ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:name="com.example.user.plalarm.Week_Activity"-->
+<!--        android:id="@+id/week_view"/>-->
+
+<!--&lt;!&ndash;    일간 뷰 fragment&ndash;&gt;-->
+<!--    <fragment-->
+<!--        android:name="com.example.user.plalarm.Day_Activity"-->
+<!--        android:id="@+id/day_view"/>-->
+
+<!--    일정 생성 버튼-->
+    <ImageButton
+        android:id="@+id/new_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#00000000"
+        android:src="@drawable/new_icon"/>
+
+</RelativeLayout>
