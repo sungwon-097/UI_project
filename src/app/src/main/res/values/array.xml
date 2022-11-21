@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="calendar_order_array">
+        <item>월 먼저</item>
+        <item>주 먼저</item>
+        <item>일 먼저</item>
+    </string-array>
+</resources>
