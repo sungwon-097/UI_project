@@ -61,8 +61,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         //SoundButton을 클릭할 경우, 이미지를 교차 표시(visibility)
         if (view == soundButton) {
-            notificationOnIcon.setVisibility(view.INVISIBLE);
-            notificationOffIcon.setVisibility(view.VISIBLE);
+            if(notificationOnIcon.getVisibility() == View.VISIBLE) {
+                notificationOnIcon.setVisibility(View.INVISIBLE);
+                notificationOffIcon.setVisibility(View.VISIBLE);
+            }
+            else {
+                notificationOnIcon.setVisibility(View.VISIBLE);
+                notificationOffIcon.setVisibility(View.INVISIBLE);
+            }
         }
         //SettingButton을 클릭할 경우, SettingActivity로 넘어감
         else if (view == settingButton) {
@@ -72,7 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //NewButton을 클릭할 경우, 일정 생성 Activity로 넘어감
         //현재 일정 생성 Activity가 만들어지지 않았으므로 MainActivity로 가도록 해놓았음, 추후 수정
         else if (view == newButton) {
-            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            Intent intent = new Intent(MainActivity.this, EventActivity.class);
+            startActivity(intent);
         }
     }
 }
