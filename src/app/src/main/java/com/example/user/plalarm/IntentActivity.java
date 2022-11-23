@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,10 +23,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.user.plalarm.config.FirebaseConfig;
+import com.example.user.plalarm.model.Event;
+
 public class IntentActivity extends AppCompatActivity {
 
     Activity act = this;
     ListView listView;
+    Button cancelButton;
     private List<ResolveInfo> apps;
     private PackageManager pm;
 
@@ -45,11 +50,26 @@ public class IntentActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(new gridAdapter());
+
+        cancelButton = findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                Event event = (Event) intent.getSerializableExtra("user");
+
+                FirebaseConfig.putEventData("user", event);
+                Toast.makeText(act, "일정을 등록하였습니다", Toast.LENGTH_SHORT).show();
+
+                Intent mainIntent = new Intent(IntentActivity.this, MainActivity.class);
+                startActivity(mainIntent);
+            }
+        });
     }
 
     public class gridAdapter extends BaseAdapter {
 
-        private LayoutInflater inflater;
+        private final LayoutInflater inflater;
 
         public gridAdapter(){
             inflater = (LayoutInflater) act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -86,8 +106,18 @@ public class IntentActivity extends AppCompatActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String msg = info.activityInfo.packageName + ", " + info.activityInfo.name;
-                    Toast.makeText(act, msg, Toast.LENGTH_SHORT).show();
+                    String pkgName = info.activityInfo.packageName;
+                    Toast.makeText(act, pkgName, Toast.LENGTH_SHORT).show();
+
+                    Intent intent = getIntent();
+                    Event event = (Event) intent.getSerializableExtra("user");
+                    event.setIntentApp(pkgName);
+
+                    FirebaseConfig.putEventData("user", event);
+                    Toast.makeText(act, "일정을 등록하였습니다", Toast.LENGTH_SHORT).show();
+
+                    Intent mainIntent = new Intent(IntentActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
                 }
             });
             textView.setOnClickListener(new View.OnClickListener() {
