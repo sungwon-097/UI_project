@@ -23,34 +23,24 @@ import java.util.Map;
 
 public class FirebaseConfig{
 
-    private final FirebaseFirestore db;
-
-    public FirebaseConfig(){
-        this.db = FirebaseFirestore.getInstance();
-    }
-
-    public FirebaseFirestore getDb(){
-        return db;
-    }
-
     // userData 저장
-    public static void putUserData(FirebaseFirestore db, @NonNull String path, @NonNull User user){
+    public static void putUserData(@NonNull String path, @NonNull User user){
         Map<String, Object> userEntity = new HashMap<>();
         userEntity.put("Email", user.getEmail());
         userEntity.put("Nickname", user.getNickname());
         userEntity.put("Password", user.getPassword());
-        db.collection(path).document(user.getEmail()).set(userEntity);
+        FirebaseFirestore.getInstance().collection(path).document(user.getEmail()).set(userEntity);
     }
 
     // eventData 를 일정의 이름과 시작시간을 합친 문서로 저장(Ex event2022-11-08)
-    public static void putEventData(FirebaseFirestore db, @NonNull String path, @NonNull Event event){
+    public static void putEventData(@NonNull String path, Event event){
         Map<String, Object> eventEntity = new HashMap<>();
         eventEntity.put("Title", event.getTitle());
         eventEntity.put("Content", event.getContent());
         eventEntity.put("StartTime", event.getStartTime());
         eventEntity.put("EndTime", event.getEndTime());
         eventEntity.put("IntentApp", event.getIntentApp());
-        db.collection(path).document(event.getTitle()+event.getStartTime()).set(eventEntity);
+        FirebaseFirestore.getInstance().collection(path).document(event.getTitle()+event.getStartTime()).set(eventEntity);
     }
 
     // collection 을 통해 서버에 저장된 정보를 가져옴
