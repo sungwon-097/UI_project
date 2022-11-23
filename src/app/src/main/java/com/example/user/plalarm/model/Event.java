@@ -1,10 +1,11 @@
 package com.example.user.plalarm.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import kotlin.BuilderInference;
 
-public class Event {
+public class Event implements Serializable {
 
     private String title;
     private String content;
@@ -20,6 +21,11 @@ public class Event {
         this.intentApp = intentApp;
     }
     public Event(){}
+
+
+    public void setIntentApp(String intentApp) {
+        this.intentApp = intentApp;
+    }
 
     public String getTitle() {
         return title;
