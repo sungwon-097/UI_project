@@ -1,4 +1,4 @@
-package com.example.user.plalarm;
+package com.example.user.plalarm.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.Toast;
 
-import com.example.user.plalarm.config.FirebaseConfig;
+import com.example.user.plalarm.R;
 import com.example.user.plalarm.model.Event;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -29,7 +27,6 @@ public class EventActivity extends AppCompatActivity{
     Button intentButton, submitButton;
     String intentApp = "";
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,19 +49,18 @@ public class EventActivity extends AppCompatActivity{
         endHour = findViewById(R.id.endHour);
         endMinute = findViewById(R.id.endMinute);
 
-//        intentButton = findViewById(R.id.intentButton);
         submitButton = findViewById(R.id.submitButton);
 
         setPicker(startYear, 2100, 1900, calendar.get(Calendar.YEAR));
         setPicker(startMonth, 12, 1, calendar.get(Calendar.MONTH+1));
         setPicker(startDate, 31, 1, calendar.get(Calendar.DATE));
-        setPicker(startHour, 24, 1, calendar.get(Calendar.HOUR_OF_DAY));
+        setPicker(startHour, 23, 0, calendar.get(Calendar.HOUR_OF_DAY));
         setPicker(startMinute, 60, 0, calendar.get(Calendar.MINUTE));
 
         setPicker(endYear, 2100, 1900, calendar.get(Calendar.YEAR));
         setPicker(endMonth, 12, 1, calendar.get(Calendar.MONTH+1));
         setPicker(endDate, 31, 1, calendar.get(Calendar.DATE));
-        setPicker(endHour, 24, 1, calendar.get(Calendar.HOUR_OF_DAY));
+        setPicker(endHour, 23, 0, calendar.get(Calendar.HOUR_OF_DAY));
         setPicker(endMinute, 60, 0, calendar.get(Calendar.MINUTE));
 
         submitButton.setOnClickListener(new View.OnClickListener() {
