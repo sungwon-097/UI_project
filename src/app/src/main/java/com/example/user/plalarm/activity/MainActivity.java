@@ -1,31 +1,19 @@
-package com.example.user.plalarm;
-
-import static android.content.ContentValues.TAG;
+package com.example.user.plalarm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TabHost;
 
-import com.example.user.plalarm.config.FirebaseConfig;
+import com.example.user.plalarm.R;
 import com.example.user.plalarm.fragment.CalendarFragment;
 import com.example.user.plalarm.fragment.DayFragment;
 import com.example.user.plalarm.fragment.WeekFragment;
-import com.example.user.plalarm.model.Event;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -59,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settingButton.setOnClickListener(this);
         newButton.setOnClickListener(this);
 
+        int DEFAULT = 1; // TODO : sharedPref 로 이 부분을 가져 올 수 있어야 함
+        fragmentView(DEFAULT);
+
         notification.setOnClickListener(this);
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,24 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentView(3);
             }
         });
-
-//        TabHost tabHost = findViewById(R.id.host);
-//        tabHost.setup();
-//
-//        TabHost.TabSpec spec = tabHost.newTabSpec("month");
-//        spec.setIndicator(null, ResourcesCompat.getDrawable(getResources(), R.drawable.month_icon, null));
-//        spec.setContent(R.id.month_view);
-//        tabHost.addTab(spec);
-//
-//        spec = tabHost.newTabSpec("week");
-//        spec.setIndicator(null, ResourcesCompat.getDrawable(getResources(), R.drawable.week_icon, null));
-//        spec.setContent(R.id.week_view);
-//        tabHost.addTab(spec);
-//
-//        spec = tabHost.newTabSpec("day");
-//        spec.setIndicator(null, ResourcesCompat.getDrawable(getResources(), R.drawable.daily_icon, null));
-//        spec.setContent(R.id.day_view);
-//        tabHost.addTab(spec);
     }
 
     private void fragmentView(int fragment){
@@ -123,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public void onClick(View view) {
-        //SoundButton을 클릭할 경우, 이미지를 교차 표시(visibility)
+        //SoundButton 을 클릭할 경우, 이미지를 교차 표시(visibility)
         if (view == soundButton) {
             if(notificationOnIcon.getVisibility() == View.VISIBLE) {
                 notificationOnIcon.setVisibility(View.INVISIBLE);
@@ -134,13 +107,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 notificationOffIcon.setVisibility(View.INVISIBLE);
             }
         }
-        //SettingButton을 클릭할 경우, SettingActivity로 넘어감
+        //SettingButton 을 클릭할 경우, SettingActivity 로 넘어감
         else if (view == settingButton) {
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
         }
-        //NewButton을 클릭할 경우, 일정 생성 Activity로 넘어감
-        //현재 일정 생성 Activity가 만들어지지 않았으므로 MainActivity로 가도록 해놓았음, 추후 수정
+        //NewButton 을 클릭할 경우, 일정 생성 Activity 로 넘어감
+        //현재 일정 생성 Activity 가 만들어지지 않았으므로 MainActivity 로 가도록 해놓았음, 추후 수정
         else if (view == newButton) {
             Intent intent = new Intent(MainActivity.this, EventActivity.class);
             startActivity(intent);
