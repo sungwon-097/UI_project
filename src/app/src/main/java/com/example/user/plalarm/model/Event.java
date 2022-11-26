@@ -1,5 +1,7 @@
 package com.example.user.plalarm.model;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -7,11 +9,11 @@ public class Event implements Serializable {
 
     private String title;
     private String content;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
+    private String endTime;
     private String intentApp;
 
-    public Event(String title, String content, LocalDateTime startTime, LocalDateTime endTime, String intentApp) {
+    public Event(String title, String content, String startTime, String endTime, String intentApp) {
         this.title = title;
         this.content = content;
         this.startTime = startTime;
@@ -19,13 +21,6 @@ public class Event implements Serializable {
         this.intentApp = intentApp;
     }
 
-    public Event(String title, String content, String startTime, String endTime, String intentApp) {
-        this.title = title;
-        this.content = content;
-        this.startTime = LocalDateTime.parse(startTime);
-        this.endTime = LocalDateTime.parse(endTime);
-        this.intentApp = intentApp;
-    }
     public Event(){}
 
     public void setTitle(String title) {
@@ -36,11 +31,11 @@ public class Event implements Serializable {
         this.content = content;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -56,11 +51,11 @@ public class Event implements Serializable {
         return content;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 

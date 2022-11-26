@@ -1,8 +1,6 @@
 package com.example.user.plalarm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
 import com.example.user.plalarm.R;
 
 public class SettingActivity extends AppCompatActivity {
@@ -19,7 +16,6 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
 
         //Spinner 선언
         Spinner spinner = findViewById(R.id.calendar_spinner);
