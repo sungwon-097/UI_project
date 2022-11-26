@@ -3,8 +3,6 @@ package com.example.user.plalarm.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import kotlin.BuilderInference;
-
 public class Event implements Serializable {
 
     private String title;
@@ -20,8 +18,31 @@ public class Event implements Serializable {
         this.endTime = endTime;
         this.intentApp = intentApp;
     }
+
+    public Event(String title, String content, String startTime, String endTime, String intentApp) {
+        this.title = title;
+        this.content = content;
+        this.startTime = LocalDateTime.parse(startTime);
+        this.endTime = LocalDateTime.parse(endTime);
+        this.intentApp = intentApp;
+    }
     public Event(){}
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
 
     public void setIntentApp(String intentApp) {
         this.intentApp = intentApp;
