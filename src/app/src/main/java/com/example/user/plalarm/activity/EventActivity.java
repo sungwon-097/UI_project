@@ -2,7 +2,6 @@ package com.example.user.plalarm.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -11,10 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-
 import com.example.user.plalarm.R;
 import com.example.user.plalarm.model.Event;
-
 import java.time.LocalDateTime;
 import java.util.Calendar;
 
@@ -24,7 +21,7 @@ public class EventActivity extends AppCompatActivity{
     EditText title, content;
     NumberPicker startYear, startMonth, startDate, startHour, startMinute, endYear, endMonth, endDate, endHour, endMinute;
     LocalDateTime startDt, endDt;
-    Button intentButton, submitButton;
+    Button submitButton;
     String intentApp = "";
 
     @Override
@@ -64,11 +61,14 @@ public class EventActivity extends AppCompatActivity{
         setPicker(endMinute, 60, 0, calendar.get(Calendar.MINUTE));
 
         submitButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 startDt = LocalDateTime.of(startYear.getValue(), startMonth.getValue(), startDate.getValue(), startHour.getValue(), startMinute.getValue());
                 endDt = LocalDateTime.of(endYear.getValue(), endMonth.getValue(), endDate.getValue(), endHour.getValue(), endMinute.getValue());
-                Event event = new Event(title.getText().toString(), content.getText().toString(), startDt, endDt, intentApp);
+                String startDateToString = startDt.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                String endDateToString = endDt.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                Event event = new Event(title.getText().toString(), content.getText().toString(), startDateToString, endDateToString, intentApp);
 
                 Intent intent = new Intent(EventActivity.this, IntentActivity.class);
                 intent.putExtra("user", event);
