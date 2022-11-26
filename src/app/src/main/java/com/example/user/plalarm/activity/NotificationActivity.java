@@ -1,4 +1,4 @@
-package com.example.user.plalarm;
+package com.example.user.plalarm.activity;
 
 import static android.content.ContentValues.TAG;
 
@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.user.plalarm.R;
 import com.example.user.plalarm.config.FirebaseConfig;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.service.TtsService;
@@ -38,7 +39,6 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
         button.setOnClickListener(this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         String channelID = "DEFAULT";
@@ -51,10 +51,8 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
     }
 
     public void createNotificationChannel(String channelID, String channelName, int importance){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.createNotificationChannel(new NotificationChannel(channelID, channelName, importance));
-        }
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(new NotificationChannel(channelID, channelName, importance));
     }
 
     public void createNotification(String channelID, int id, String title, String content){
