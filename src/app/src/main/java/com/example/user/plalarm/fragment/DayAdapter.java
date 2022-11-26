@@ -1,41 +1,37 @@
-package com.example.user.plalarm;
+package com.example.user.plalarm.fragment;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
 
+import com.example.user.plalarm.ListItem;
+import com.example.user.plalarm.R;
+
 import java.util.ArrayList;
 
-public class dayAdapter extends RecyclerView.Adapter<dayAdapter.ViewHolder> {
+public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
     private ArrayList<ListItem> items = new ArrayList<>();
 
     @NonNull
     @Override
-    public dayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_item,parent,false);
-        ViewHolder viewHolder = new ViewHolder(itemView);
-        return viewHolder;
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull dayAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DayAdapter.ViewHolder holder, int position) {
         ListItem item = items.get(position);
 
         holder.title.setText(item.getTitle());
-        holder.worktime.setText(item.getWorktime());
+        holder.workTime.setText(item.getWorktime());
     }
 
     @Override
@@ -47,14 +43,14 @@ public class dayAdapter extends RecyclerView.Adapter<dayAdapter.ViewHolder> {
         this.items = items;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-        TextView title, worktime;
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView title, workTime;
 
         ViewHolder(View itemView){
             super(itemView);
 
             title = itemView.findViewById(R.id.day_title);
-            worktime = itemView.findViewById(R.id.day_time);
+            workTime = itemView.findViewById(R.id.day_time);
         }
     }
 

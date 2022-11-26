@@ -8,9 +8,7 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp">
+        android:layout_alignParentLeft="true">
 
 <!--        소리 활성화,비활성화 전환 버튼-->
         <Button
@@ -22,16 +20,18 @@
 <!--        소리 활성화 아이콘-->
         <ImageView
             android:id="@+id/notification_on_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
             android:visibility="visible"
             app:srcCompat="@drawable/notification_on" />
 
 <!--        소리 비활성화 아이콘-->
         <ImageView
             android:id="@+id/notification_mute_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/notification_mute" />
 
@@ -39,8 +39,9 @@
 
 <!--    화면 중앙 위의 아이콘-->
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="15dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/logo"/>
@@ -48,57 +49,58 @@
 <!--    설정 버튼-->
     <ImageButton
         android:id="@+id/setting_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
+        android:scaleType="fitXY"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="15dp"
+        android:layout_alignParentEnd="true"
         android:background="#00000000"
         android:src="@drawable/setting_icon"/>
 
-<!--    이후는 Fragment 작업 영역(미완성)  -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="100dp"
+        android:gravity="center_horizontal"
+        >
+        <Button
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="calendar"
+        />
+        <Button
+            android:id="@+id/week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/calendar"
+            android:text="week"
+            />
+        <Button
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/week"
+            android:text="day"
+            />
+        <Button
+            android:id="@+id/notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/day"
+            android:text="noti"
+            />
+    </LinearLayout>
 
-<!--    <TabHost-->
-<!--        android:id="@+id/host"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:layout_centerInParent="true">-->
-
-<!--         <LinearLayout-->
-<!--             android:layout_width="match_parent"-->
-<!--             android:layout_height="match_parent"-->
-<!--             android:orientation="vertical">-->
-
-<!--             <TabWidget-->
-<!--                 android:id="@android:id/tabs"-->
-<!--                 android:layout_width="match_parent"-->
-<!--                 android:layout_height="wrap_content"-->
-<!--                 android:background="#000000000" />-->
-
-<!--             <FrameLayout-->
-<!--                 android:id="@android:id/tabcontent"-->
-<!--                 android:layout_width="match_parent"-->
-<!--                 android:layout_height="match_parent">-->
-
-                 <!--    월간 뷰 fragment-->
-<!--&lt;!&ndash;                 <fragment&ndash;&gt;-->
-<!--&lt;!&ndash;                     android:id="@+id/month_view"&ndash;&gt;-->
-<!--&lt;!&ndash;                     android:name="com.example.user.plalarm.Calendar_Activity" />&ndash;&gt;-->
-
-                 <!--    주간 뷰 fragment-->
-<!--&lt;!&ndash;                 <fragment&ndash;&gt;-->
-<!--&lt;!&ndash;                     android:id="@+id/week_view"&ndash;&gt;-->
-<!--&lt;!&ndash;                     android:name="com.example.user.plalarm.Week_Activity" />&ndash;&gt;-->
-
-                 <!--    일간 뷰 fragment-->
-<!--&lt;!&ndash;                 <fragment&ndash;&gt;-->
-<!--&lt;!&ndash;                     android:id="@+id/day_view"&ndash;&gt;-->
-<!--&lt;!&ndash;                     android:name="com.example.user.plalarm.Day_Activity" />&ndash;&gt;-->
-
-<!--             </FrameLayout>-->
-<!--         </LinearLayout>-->
-<!--    </TabHost>-->
-
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        />
 <!--    일정 생성 버튼-->
     <ImageButton
         android:id="@+id/new_button"

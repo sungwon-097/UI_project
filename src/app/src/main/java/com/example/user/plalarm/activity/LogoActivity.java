@@ -1,13 +1,12 @@
-package com.example.user.plalarm;
+package com.example.user.plalarm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.LinearLayout;
+
+import com.example.user.plalarm.R;
 
 public class LogoActivity extends AppCompatActivity {
 
