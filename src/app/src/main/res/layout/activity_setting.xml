@@ -5,27 +5,26 @@
     android:padding="10dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
 <!--    좌상단 로고-->
         <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/logo"/>
 
 <!--    "설정" 화면 Title-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="10dp"
-            android:text="설 정"
-            android:textSize="40dp" />
-
-    </LinearLayout>
+            android:text="설정"
+            android:textSize="35dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"/>
+    </FrameLayout>
 
 <!--    캘린더 순서-->
     <LinearLayout
