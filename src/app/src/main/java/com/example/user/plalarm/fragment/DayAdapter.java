@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
 
-import com.example.user.plalarm.ListItem;
 import com.example.user.plalarm.R;
-
-import java.util.ArrayList;
+import com.example.user.plalarm.model.Event;
+import com.example.user.plalarm.model.EventList;
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
-    private ArrayList<ListItem> items = new ArrayList<>();
+    private EventList eventList = new EventList();
 
     @NonNull
     @Override
@@ -28,29 +27,29 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DayAdapter.ViewHolder holder, int position) {
-        ListItem item = items.get(position);
+        Event event = eventList.getEventList().get(position);
 
-        holder.title.setText(item.getTitle());
-        holder.workTime.setText(item.getWorktime());
+        holder.title.setText(event.getTitle());
+        holder.startTime.setText(event.getStartTime());
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return eventList.size();
     }
 
-    public void setItems(ArrayList<ListItem> items){
-        this.items = items;
+    public void setItems(EventList eventList){
+        this.eventList = (EventList) eventList;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView title, workTime;
+        TextView title, startTime;
 
         ViewHolder(View itemView){
             super(itemView);
 
             title = itemView.findViewById(R.id.day_title);
-            workTime = itemView.findViewById(R.id.day_time);
+            startTime = itemView.findViewById(R.id.day_time);
         }
     }
 
