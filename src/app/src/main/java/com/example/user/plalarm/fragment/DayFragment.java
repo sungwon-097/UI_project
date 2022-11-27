@@ -1,7 +1,10 @@
 package com.example.user.plalarm.fragment;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.user.plalarm.R;
 import com.example.user.plalarm.SampleData;
+import com.example.user.plalarm.model.Event;
+import com.example.user.plalarm.model.EventList;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.SimpleDateFormat;
@@ -47,7 +57,7 @@ public class DayFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(super.getContext()));
         recyclerView.setAdapter(adapter);
 
-        adapter.setItems(new SampleData().getItems());
+        adapter.setItems(new SampleData().getEventItems());
 
         return view;
     }
