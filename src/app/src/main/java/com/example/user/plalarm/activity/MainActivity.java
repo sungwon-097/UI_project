@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {//backbutton 2번누르면 나가짐
 
         //마지막으로 누른 '뒤로가기' 버튼 클릭 시간이 이전의 '뒤로가기' 버튼 클릭 시간과의 차이가 2초보다 크면
         if(System.currentTimeMillis() > pressedTime + 2000){
