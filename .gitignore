@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/androidstudio,java,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,java,gradle
 
+src/local.properties
+.DS_Store
 ### Java ###
 # Compiled class file
 *.class
