@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.user.plalarm.R;
 import com.example.user.plalarm.fragment.CalendarFragment;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ImageView notificationOnIcon;
     ImageView notificationOffIcon;
+
+    long pressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +124,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(view == notification){
             Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
             startActivity(intent);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+
+        //마지막으로 누른 '뒤로가기' 버튼 클릭 시간이 이전의 '뒤로가기' 버튼 클릭 시간과의 차이가 2초보다 크면
+        if(System.currentTimeMillis() > pressedTime + 2000){
+            //현재 시간을 pressedTime 에 저장
+            pressedTime = System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"한번 더 누르면 종료", Toast.LENGTH_SHORT).show();
+        }
+
+        //마지막 '뒤로가기' 버튼 클릭시간이 이전의 '뒤로가기' 버튼 클릭 시간과의 차이가 2초보다 작으면
+        else{
+            finishAffinity();
+            System.runFinalization();
+            System.exit(0);
         }
     }
 }
