@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.user.plalarm.R;
+import com.github.tlaabs.timetableview.Schedule;
+import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
@@ -23,14 +25,23 @@ import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 
+import java.util.ArrayList;
+
 public class WeekFragment extends Fragment implements View.OnClickListener{
+    TimetableView timetableView;
+    ArrayList<Schedule> schedules = new ArrayList<Schedule>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TimetableView timetableView;
+
         View view = inflater.inflate(R.layout.fragment_week, container, false);
         timetableView = view.findViewById(R.id.timetable);
+
+        MakeData("사인페",5, 13,55,15,0);
+        MakeData("사인페",3, 13,55,15,0);
+        MakeData("사인페",5, 13,55,15,0);
+
 
 //        MaterialCalendarView calendarView = view.findViewById(R.id.material_week_calendar);
 //        calendarView.setSelectedDate(CalendarDay.today());
@@ -79,8 +90,15 @@ public class WeekFragment extends Fragment implements View.OnClickListener{
 //        });
         return view;
     }
-
-
+    public void MakeData(String t,int SD, int S_h, int S_m, int E_h, int E_m ){
+        Schedule schedule = new Schedule();
+        schedule.setClassTitle(t); // sets subject
+        schedule.setDay(SD);
+        schedule.setStartTime(new Time(S_h,S_m)); // sets the beginning of class time (hour,minute)
+        schedule.setEndTime(new Time(E_h,E_m)); // sets the end of class time (hour,minute)
+        schedules.add(schedule);
+        timetableView.add(schedules);
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
