@@ -38,30 +38,6 @@ public class FirebaseConfig{
         FirebaseFirestore.getInstance().collection(path).document(event.getStartTime()+event.getTitle()).set(eventEntity);
     }
 
-    // collection 을 통해 서버에 저장된 정보를 가져옴
-    public static void getData(@NonNull String collectionPath){
-
-        FirebaseFirestore.getInstance().collection(collectionPath)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getTitle());
-                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getContent());
-                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getIntentApp());
-                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getEndTime());
-                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getStartTime());
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-    }
-
     // 컬렉션 내부의 문서 이름을 인자로 정보 삭제
     public static void deleteData(@NonNull String collectionPath, @NonNull String documentPath){
         FirebaseFirestore.getInstance().collection(collectionPath).document(documentPath)
