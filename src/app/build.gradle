@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.user.plalarm"
-        minSdk 21
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -52,4 +52,7 @@ dependencies {
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
     //위에 2줄 추가해야 material calendar 사용가능
+    //implementation 'com.github.Sky-Titan:CollegeTimeTableLayout:0.3-test'
+    implementation 'com.github.tlaabs:TimetableView:1.0.3-fx1'
+    //timetablelayout 구문
 }
