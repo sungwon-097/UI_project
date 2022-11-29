@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,8 +52,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settingButton.setOnClickListener(this);
         newButton.setOnClickListener(this);
 
-        int DEFAULT = 1; // TODO : sharedPref 로 이 부분을 가져 올 수 있어야 함
+        // sharedPref 로 지정된 Fragment 먼저 가져오는 부분
+        // TODO : sharedPref 로 이 부분을 가져 올 수 있어야 함 (DONE)
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        int DEFAULT = sharedPref.getInt("calendarSpinner", 0) + 1;
         fragmentView(DEFAULT);
+
+        // sharedPref 로 notification button 의 상태 저장
+        boolean NOTIFICATION_MUTE = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
+        if (NOTIFICATION_MUTE) {
+            notificationOnIcon.setVisibility(View.INVISIBLE);
+            notificationOffIcon.setVisibility(View.VISIBLE);
+        }
 
         notification.setOnClickListener(this);
         calendar.setOnClickListener(new View.OnClickListener() {
@@ -100,14 +112,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         //SoundButton 을 클릭할 경우, 이미지를 교차 표시(visibility)
+        // TODO : sharedPref 로 MUTE 의 ON/OFF 상태 조절 가능해야 함 (DONE)
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         if (view == soundButton) {
             if(notificationOnIcon.getVisibility() == View.VISIBLE) {
                 notificationOnIcon.setVisibility(View.INVISIBLE);
                 notificationOffIcon.setVisibility(View.VISIBLE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("NOTIFICATION_MUTE", true);
+                editor.apply();
             }
             else {
                 notificationOnIcon.setVisibility(View.VISIBLE);
                 notificationOffIcon.setVisibility(View.INVISIBLE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("NOTIFICATION_MUTE", false);
+                editor.apply();
             }
         }
         //SettingButton 을 클릭할 경우, SettingActivity 로 넘어감
