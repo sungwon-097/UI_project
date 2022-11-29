@@ -1,10 +1,7 @@
 package com.example.user.plalarm.fragment;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.user.plalarm.EventListDAO;
 import com.example.user.plalarm.R;
-import com.example.user.plalarm.SampleData;
-import com.example.user.plalarm.model.Event;
-import com.example.user.plalarm.model.EventList;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.SimpleDateFormat;
@@ -37,8 +27,10 @@ import java.util.Locale;
 public class DayFragment extends Fragment {
 
     TextView current_day;
-    private MaterialCalendarView calendarView;
     RecyclerView recyclerView;
+    String collectionPath = "user"; // TODO : 경로를 핸들링 해야 함
+
+    private MaterialCalendarView calendarView;
     private final DayAdapter adapter = new DayAdapter();
 
     @SuppressLint("SetTextI18n")
@@ -57,7 +49,7 @@ public class DayFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(super.getContext()));
         recyclerView.setAdapter(adapter);
 
-        adapter.setItems(new SampleData().getEventItems());
+        adapter.setItems(new EventListDAO(collectionPath).getEventItems());
 
         return view;
     }
