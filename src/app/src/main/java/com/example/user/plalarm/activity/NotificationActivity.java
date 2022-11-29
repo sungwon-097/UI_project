@@ -39,6 +39,7 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
         button.setOnClickListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         String channelID = "DEFAULT";
@@ -52,7 +53,9 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
 
     public void createNotificationChannel(String channelID, String channelName, int importance){
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(new NotificationChannel(channelID, channelName, importance));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(new NotificationChannel(channelID, channelName, importance));
+        }
     }
 
     public void createNotification(String channelID, int id, String title, String content){
