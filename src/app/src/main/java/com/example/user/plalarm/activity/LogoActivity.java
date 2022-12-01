@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.user.plalarm.R;
+import com.example.user.plalarm.config.FirebaseDataContainer;
 
 public class LogoActivity extends AppCompatActivity {
 
@@ -14,6 +15,7 @@ public class LogoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);  //Logo Activity xml 파일 호출
+        new FirebaseDataContainer("test");
         new Handler().postDelayed(new Runnable()
         {
             @Override
