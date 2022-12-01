@@ -60,12 +60,14 @@ public class Event_calendar_Adapter extends BaseAdapter{
 //        this.eventList = (EventList) eventList;
 //    }
 
-    public void addItem(String t,String s, String e){
+    public void addItem(Event event){
 
         Event i = new Event();
-        i.setTitle(t);
-        i.setStartTime(s);
-        i.setEndTime(e);
+        i.setTitle(event.getTitle());
+        i.setContent(event.getContent());
+        i.setStartTime(event.getStartTime());
+        i.setEndTime(event.getEndTime());
+        i.setIntentApp(event.getIntentApp());
 
         items.add(i);
     }
