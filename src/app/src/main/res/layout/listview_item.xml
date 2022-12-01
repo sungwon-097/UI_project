@@ -22,21 +22,30 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/day_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="title"
+                android:text="제목을 입력하세요"
                 android:textColor="@color/white"
                 android:textSize="30dp"/>
             <TextView
-                android:id="@+id/day_time"
+                android:id="@+id/start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="title"
+                android:text="00시00분"
+                android:textColor="@color/white"
+                android:layout_marginTop="8dp"
+                android:textSize="30dp"/>
+            <TextView
+                android:id="@+id/end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00시00분"
                 android:textColor="@color/white"
                 android:layout_marginTop="8dp"
                 android:textSize="30dp"/>

@@ -7,24 +7,30 @@
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
-
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/material_week_calendar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        />
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:id="@+id/check_day"/>
+    </LinearLayout>
 
     <com.github.tlaabs.timetableview.TimetableView
         android:id="@+id/timetable"
-        app:cell_height="70dp"
+        app:cell_height="22dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:header_title="@array/my_header_title"
         app:column_count="8"
-        app:start_time="9"/>
-
-
-
+        app:start_time="0"
+        app:row_count="25"
+        />
 
 </LinearLayout>
