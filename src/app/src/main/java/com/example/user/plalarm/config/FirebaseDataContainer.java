@@ -14,7 +14,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class FirebaseDataContainer {
 
-    private static EventList container = new EventList();
+    public static EventList container = new EventList();
 
     public FirebaseDataContainer(EventList container) {
         FirebaseDataContainer.container = container;
@@ -32,16 +32,10 @@ public class FirebaseDataContainer {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            FirebaseDataContainer.container.clear();
+                            if (container != null)
+                                FirebaseDataContainer.container.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 FirebaseDataContainer.container.add(document.toObject(Event.class));
-
-//                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getTitle());
-//                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getContent());
-//                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getIntentApp());
-//                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getEndTime());
-//                                Log.d(TAG, "toObject : "+ document.toObject(Event.class).getStartTime());
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());

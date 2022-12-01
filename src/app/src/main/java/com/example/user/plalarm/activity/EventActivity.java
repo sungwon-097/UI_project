@@ -49,10 +49,10 @@ public class EventActivity extends AppCompatActivity{
         setPicker(startMonth, 12, 1, calendar.get(Calendar.MONTH)+1);
         setPicker(startDate, 31, 1, calendar.get(Calendar.DATE));
         setPicker(startHour, 23, 0, calendar.get(Calendar.HOUR_OF_DAY));
-        setPicker(startMinute, 60, 0, calendar.get(Calendar.MINUTE));
+        setPicker(startMinute, 59, 0, calendar.get(Calendar.MINUTE));
 
         setPicker(endHour, 23, 0, calendar.get(Calendar.HOUR_OF_DAY));
-        setPicker(endMinute, 60, 0, calendar.get(Calendar.MINUTE));
+        setPicker(endMinute, 59, 0, calendar.get(Calendar.MINUTE));
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)

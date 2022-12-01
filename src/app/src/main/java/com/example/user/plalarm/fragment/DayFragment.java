@@ -15,9 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.user.plalarm.EventListDAO;
 import com.example.user.plalarm.R;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -28,10 +29,12 @@ public class DayFragment extends Fragment {
 
     TextView current_day;
     RecyclerView recyclerView;
-    String collectionPath = "user"; // TODO : 경로를 핸들링 해야 함
+    String collectionPath = "test"; // TODO : 경로를 핸들링 해야 함
 
-    private MaterialCalendarView calendarView;
     private final DayAdapter adapter = new DayAdapter();
+
+    LocalDate localDate = LocalDate.now();
+    String currentDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
     @SuppressLint("SetTextI18n")
     @Nullable
@@ -49,7 +52,7 @@ public class DayFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(super.getContext()));
         recyclerView.setAdapter(adapter);
 
-        adapter.setItems(new EventListDAO(collectionPath).getEventItems());
+        adapter.setItems(new EventListDAO(collectionPath).getDayEventItems(currentDate));
 
         return view;
     }

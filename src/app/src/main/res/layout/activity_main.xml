@@ -55,7 +55,7 @@
         android:layout_margin="15dp"
         android:layout_alignParentEnd="true"
         android:background="#00000000"
-        android:src="@drawable/setting_icon"/>
+        android:src="@drawable/gear"/>
 
     <LinearLayout
         android:id="@+id/header"
@@ -104,13 +104,14 @@
 <!--    일정 생성 버튼-->
     <ImageButton
         android:id="@+id/new_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
         android:background="#00000000"
-        android:src="@drawable/new_icon"/>
+        android:src="@drawable/add_icon"/>
 
 </RelativeLayout>

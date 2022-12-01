@@ -14,8 +14,13 @@ import com.example.user.plalarm.R;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.model.EventList;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
     private EventList eventList = new EventList();
+    LocalDate localDate = LocalDate.now();
+    String currentDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
     @NonNull
     @Override
@@ -30,7 +35,12 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
         Event event = eventList.getEventList().get(position);
 
         holder.title.setText(event.getTitle());
-        holder.startTime.setText(event.getStartTime());
+        holder.startTime.setText(getGeneralTimeFormat(event.getStartTime()));
+        holder.endTime.setText(getGeneralTimeFormat(event.getEndTime()));
+    }
+
+    public String getGeneralTimeFormat(String date){
+        return date.substring(11, 13) +"시"+ date.substring(14, 16)+"분";
     }
 
     @Override
@@ -43,13 +53,14 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView title, startTime;
+        TextView title, startTime, endTime;
 
         ViewHolder(View itemView){
             super(itemView);
 
             title = itemView.findViewById(R.id.day_title);
-            startTime = itemView.findViewById(R.id.day_time);
+            startTime = itemView.findViewById(R.id.start_time);
+            endTime = itemView.findViewById(R.id.end_time);
         }
     }
 

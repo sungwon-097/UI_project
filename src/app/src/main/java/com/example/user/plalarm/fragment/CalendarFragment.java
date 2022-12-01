@@ -112,7 +112,6 @@ public class CalendarFragment extends Fragment implements OnDateSelectedListener
         String parse = date.toString();//date를 문자로 변환
         int start_num = parse.indexOf("{")+1;//{의 다음 위치값
         String result = parse.substring(start_num,(parse.substring(start_num).indexOf("}")+start_num));//{}안에 들어있는 데이터 뽑아오기
-        String date_format[] = result.split("-");//-기준으로 split
-        return date_format;
+        return result.split("-");
     }
 }
