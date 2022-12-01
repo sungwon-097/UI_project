@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean mute;
 
     long pressedTime = 0;
+    float initX = 0.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // sharedPref 로 지정된 Fragment 먼저 가져오는 부분
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         int DEFAULT = sharedPref.getInt("calendarSpinner", 0) + 1;
+        boolean NOTIFICATION_MUTE = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
+        if (NOTIFICATION_MUTE) {
+            notificationOnIcon.setVisibility(View.INVISIBLE);
+            notificationOffIcon.setVisibility(View.VISIBLE);
+        }else{
+            notificationOnIcon.setVisibility(View.VISIBLE);
+            notificationOffIcon.setVisibility(View.INVISIBLE);
+        }
+
         fragmentView(DEFAULT);
         new Handler().postDelayed(new Runnable()
         {
@@ -105,22 +116,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //         Notification 설정
         Event event = setEvent();
-        Log.v("test", "Event is set");
+        Log.i("test", "Event is set");
         if (event != null){
             setAlarm(event);
-            Log.v("test", "Alarm is Set");
+            Log.i("test", "Alarm is Set");
 //            staticEvent = event;
-        }
-
-        // sharedPref 로 notification button 의 상태 저장
-        boolean NOTIFICATION_MUTE = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
-        if (NOTIFICATION_MUTE) {
-            notificationOnIcon.setVisibility(View.INVISIBLE);
-            notificationOffIcon.setVisibility(View.VISIBLE);
-            mute = true;
-        }
-        else {
-            mute = false;
         }
 
         notification.setOnClickListener(this);
@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, EventViewActivity.class);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.addFlags (Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -223,6 +225,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finishAffinity();
             System.runFinalization();
             System.exit(0);
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if(notificationOnIcon.getVisibility() == View.VISIBLE) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("NOTIFICATION_MUTE", false);
+            editor.apply();
+        }
+        else {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("NOTIFICATION_MUTE", true);
+            editor.apply();
         }
     }
 
