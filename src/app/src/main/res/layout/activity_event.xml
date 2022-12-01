@@ -17,7 +17,7 @@
             android:text="일정 추가"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             />
         <EditText
@@ -47,6 +47,7 @@
                 android:id="@+id/startYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -106,43 +107,43 @@
             android:layout_height="wrap_content"
             android:text="종료 시간"
             />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            >
-            <NumberPicker
-                android:id="@+id/endYear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 년 "
-                />
-            <NumberPicker
-                android:id="@+id/endMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 월 "
-                />
-            <NumberPicker
-                android:id="@+id/endDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 일 "
-                />
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:gravity="center"-->
+<!--            >-->
+<!--            <NumberPicker-->
+<!--                android:id="@+id/endYear"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=" 년 "-->
+<!--                />-->
+<!--            <NumberPicker-->
+<!--                android:id="@+id/endMonth"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=" 월 "-->
+<!--                />-->
+<!--            <NumberPicker-->
+<!--                android:id="@+id/endDate"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=" 일 "-->
+<!--                />-->
+<!--        </LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,19 +171,6 @@
                 android:text=" 분 "
                 />
         </LinearLayout>
-        <!--    <Button-->
-        <!--        android:id="@+id/intentButton"-->
-        <!--        android:layout_width="100dp"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:text="앱 등록"-->
-        <!--        />-->
-        <!--    <ImageView-->
-        <!--        android:id="@+id/appLogo"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="80dp"-->
-        <!--        android:src="@drawable/logo"-->
-        <!--        />-->
-
         <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"

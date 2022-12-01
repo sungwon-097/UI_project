@@ -19,7 +19,7 @@ public class EventActivity extends AppCompatActivity{
 
     Activity act = this;
     EditText title, content;
-    NumberPicker startYear, startMonth, startDate, startHour, startMinute, endYear, endMonth, endDate, endHour, endMinute;
+    NumberPicker startYear, startMonth, startDate, startHour, startMinute, endHour, endMinute;
     LocalDateTime startDt, endDt;
     Button submitButton;
     String intentApp = "";
@@ -40,23 +40,17 @@ public class EventActivity extends AppCompatActivity{
         startHour = findViewById(R.id.startHour);
         startMinute = findViewById(R.id.startMinute);
 
-        endYear = findViewById(R.id.endYear);
-        endMonth = findViewById(R.id.endMonth);
-        endDate = findViewById(R.id.endDate);
         endHour = findViewById(R.id.endHour);
         endMinute = findViewById(R.id.endMinute);
 
         submitButton = findViewById(R.id.submitButton);
 
         setPicker(startYear, 2100, 1900, calendar.get(Calendar.YEAR));
-        setPicker(startMonth, 12, 1, calendar.get(Calendar.MONTH+1));
+        setPicker(startMonth, 12, 1, calendar.get(Calendar.MONTH)+1);
         setPicker(startDate, 31, 1, calendar.get(Calendar.DATE));
         setPicker(startHour, 23, 0, calendar.get(Calendar.HOUR_OF_DAY));
         setPicker(startMinute, 60, 0, calendar.get(Calendar.MINUTE));
 
-        setPicker(endYear, 2100, 1900, calendar.get(Calendar.YEAR));
-        setPicker(endMonth, 12, 1, calendar.get(Calendar.MONTH+1));
-        setPicker(endDate, 31, 1, calendar.get(Calendar.DATE));
         setPicker(endHour, 23, 0, calendar.get(Calendar.HOUR_OF_DAY));
         setPicker(endMinute, 60, 0, calendar.get(Calendar.MINUTE));
 
@@ -65,7 +59,7 @@ public class EventActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 startDt = LocalDateTime.of(startYear.getValue(), startMonth.getValue(), startDate.getValue(), startHour.getValue(), startMinute.getValue());
-                endDt = LocalDateTime.of(endYear.getValue(), endMonth.getValue(), endDate.getValue(), endHour.getValue(), endMinute.getValue());
+                endDt = LocalDateTime.of(startYear.getValue(), startMonth.getValue(), startDate.getValue(), endHour.getValue(), endMinute.getValue());
                 String startDateToString = startDt.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 String endDateToString = endDt.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 Event event = new Event(title.getText().toString(), content.getText().toString(), startDateToString, endDateToString, intentApp);

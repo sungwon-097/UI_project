@@ -1,8 +1,9 @@
 package com.example.user.plalarm.fragment;
 
-import android.graphics.Color;
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
-import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,25 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.user.plalarm.EventListDAO;
 import com.example.user.plalarm.R;
+import com.example.user.plalarm.model.Event;
+import com.example.user.plalarm.model.EventList;
 import com.github.tlaabs.timetableview.Schedule;
 import com.github.tlaabs.timetableview.Time;
 import com.github.tlaabs.timetableview.TimetableView;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.CalendarMode;
-import com.prolificinteractive.materialcalendarview.DayViewDecorator;
-import com.prolificinteractive.materialcalendarview.DayViewFacade;
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 
-import org.threeten.bp.DayOfWeek;
-import org.threeten.bp.LocalDate;
-
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class WeekFragment extends Fragment implements View.OnClickListener{
+public class WeekFragment extends Fragment{
     TimetableView timetableView;
     ArrayList<Schedule> schedules = new ArrayList<Schedule>();
+    String collectionPath = "user"; // TODO : 경로를 핸들링 해야 함
 
     @Nullable
     @Override
@@ -37,75 +35,44 @@ public class WeekFragment extends Fragment implements View.OnClickListener{
 
         View view = inflater.inflate(R.layout.fragment_week, container, false);
         timetableView = view.findViewById(R.id.timetable);
+        schedules = MakeData(new EventListDAO(collectionPath).getEventItems());
 
-        MakeData("사인페",5, 13,55,15,0);
-        MakeData("사인페",3, 13,55,15,0);
-        MakeData("사인페",5, 13,55,15,0);
-
-
-//        MaterialCalendarView calendarView = view.findViewById(R.id.material_week_calendar);
-//        calendarView.setSelectedDate(CalendarDay.today());
-//
-//        calendarView.state()
-//                .edit()
-//                .setCalendarDisplayMode(CalendarMode.WEEKS)
-//                .commit();
-//
-//        calendarView.addDecorators(new DayViewDecorator() {
-//            @Override
-//            public boolean shouldDecorate(CalendarDay day) {
-//                int weekDay = day.getDate().with(DayOfWeek.SATURDAY).getDayOfMonth();
-//                return weekDay == day.getDay();
-//            }
-//
-//            @Override
-//            public void decorate(DayViewFacade view) {
-//                view.addSpan(new ForegroundColorSpan(Color.BLUE));
-//            }
-//        }, new DayViewDecorator() {
-//            @Override
-//            public boolean shouldDecorate(CalendarDay day) {
-//                int weekDay = day.getDate().with(DayOfWeek.SUNDAY).getDayOfMonth();
-//                return weekDay == day.getDay();
-//            }
-//
-//            @Override
-//            public void decorate(DayViewFacade view) {
-//                view.addSpan(new ForegroundColorSpan(Color.RED));
-//            }
-//        });
-//
-//        calendarView.setTitleFormatter(new TitleFormatter() {//header title setting
-//            @Override
-//            public CharSequence format(CalendarDay day) {
-//                LocalDate inputText = day.getDate();
-//                String[] calendarHeaderElements = inputText.toString().split("-");
-//                //                        .append(Integer.parseInt(calendarHeaderElements[2]) / 4 + 1)// 주계산하는 알고리즘 구현해봐야함
-//                //                        .append("주");
-//                return calendarHeaderElements[0] +
-//                        "년 " +
-//                        calendarHeaderElements[1] +
-//                        "월";
-//            }
-//        });
         return view;
     }
-    public void MakeData(String t,int SD, int S_h, int S_m, int E_h, int E_m ){
+    public ArrayList<Schedule> MakeData(EventList eventList){
         Schedule schedule = new Schedule();
-        schedule.setClassTitle(t); // sets subject
-        schedule.setDay(SD);
-        schedule.setStartTime(new Time(S_h,S_m)); // sets the beginning of class time (hour,minute)
-        schedule.setEndTime(new Time(E_h,E_m)); // sets the end of class time (hour,minute)
-        schedules.add(schedule);
-        timetableView.add(schedules);
+        for (Event e:eventList.getEventList()){
+            String title = e.getTitle();
+            String dayOfWeek = e.getStartTime().substring(0,10);
+            schedule.setClassTitle(title);
+            schedule.setDay(getWeekOfDay(e.getStartTime()));
+            schedule.setStartTime(getTime(e.getStartTime()));
+            schedule.setEndTime(getTime(e.getEndTime()));
+            Log.d(TAG, "Title: " + schedule.getClassTitle() + "// Time : " + schedule.getStartTime().getHour() + "// Time : "+ schedule.getEndTime().getHour());
+            schedules.add(schedule);
+            timetableView.add(schedules);
+        }
+        return schedules;
     }
+
+    public int getWeekOfDay(String date){
+        int year = Integer.parseInt(date.substring(0, 4));
+        int month = Integer.parseInt(date.substring(5, 7));
+        int day = Integer.parseInt(date.substring(8, 10));
+        LocalDate localDate = LocalDate.of(year, month, day);
+
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        return dayOfWeek.getValue();
+    }
+
+    public Time getTime(String date){
+        int hour = Integer.parseInt(date.substring(11, 13));
+        int minute = Integer.parseInt(date.substring(14, 16));
+        return new Time(hour, minute);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 }
