@@ -1,25 +1,45 @@
 package com.example.user.plalarm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.user.plalarm.EventListDAO;
 import com.example.user.plalarm.R;
 import com.example.user.plalarm.fragment.CalendarFragment;
 import com.example.user.plalarm.fragment.DayFragment;
 import com.example.user.plalarm.fragment.WeekFragment;
+import com.example.user.plalarm.model.Event;
+import com.example.user.plalarm.model.EventList;
+import com.example.user.plalarm.service.NotificationService;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private AlarmManager alarmManager;
+    private NotificationManager notificationManager;
+    NotificationCompat.Builder builder;
 
     Button soundButton, notification, calendar, week, day;
     ImageButton settingButton;
@@ -27,6 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ImageView notificationOnIcon;
     ImageView notificationOffIcon;
+
+    public EventList eventList;
+//    public static Event staticEvent;
+//    public static Context eventCreatedContext;
+//    boolean madeFirstEvent;
+//    boolean canSetAlarm;
+    boolean mute;
 
     long pressedTime = 0;
 
@@ -53,8 +80,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settingButton.setOnClickListener(this);
         newButton.setOnClickListener(this);
 
+        eventList = new EventListDAO("test").getEventItems();
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+//        eventCreatedContext = this;
+//        madeFirstEvent = false;
+        mute = false;
+
         // sharedPref 로 지정된 Fragment 먼저 가져오는 부분
-        // TODO : sharedPref 로 이 부분을 가져 올 수 있어야 함 (DONE)
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         int DEFAULT = sharedPref.getInt("calendarSpinner", 0) + 1;
         fragmentView(DEFAULT);
@@ -67,11 +100,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }, 1500);
 
+        // 첫 Notification 오류 수정용 fragment view 출력 수정
+        fragmentView(DEFAULT);
+
+//         Notification 설정
+        Event event = setEvent();
+        Log.v("test", "Event is set");
+        if (event != null){
+            setAlarm(event);
+            Log.v("test", "Alarm is Set");
+//            staticEvent = event;
+        }
+
         // sharedPref 로 notification button 의 상태 저장
         boolean NOTIFICATION_MUTE = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
         if (NOTIFICATION_MUTE) {
             notificationOnIcon.setVisibility(View.INVISIBLE);
             notificationOffIcon.setVisibility(View.VISIBLE);
+            mute = true;
+        }
+        else {
+            mute = false;
         }
 
         notification.setOnClickListener(this);
@@ -119,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
     @Override
     public void onClick(View view) {
         //SoundButton 을 클릭할 경우, 이미지를 교차 표시(visibility)
@@ -146,16 +196,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         //NewButton 을 클릭할 경우, 일정 생성 Activity 로 넘어감
-        //현재 일정 생성 Activity 가 만들어지지 않았으므로 MainActivity 로 가도록 해놓았음, 추후 수정
         else if (view == newButton) {
             Intent intent = new Intent(MainActivity.this, EventActivity.class);
             startActivity(intent);
         }
-        else if(view == notification){
-            Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
-            startActivity(intent);
-        }
+//        else if(view == notification){
+////            Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+////            startActivity(intent);
+////            Event event = queue.poll();
+//            setAlarm();
+//        }
     }
+
     @Override
     public void onBackPressed() {// backButton 2번누르면 나가짐
 
@@ -172,5 +224,81 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             System.runFinalization();
             System.exit(0);
         }
+    }
+
+    public Event setEvent() {
+
+        //알림 울릴 Event 정보 가져옴
+        Event event;
+        long now = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateNow = new Date(now);
+        // eventList 내 정보 비교, 적합한 정보 선택
+        int position = 0;
+        while (true) {
+            if (position == eventList.size()) {
+                return null;
+            }
+            event = eventList.getEventList().get(position);
+            String eventTime = event.getStartTime();
+            eventTime = eventTime.substring(0, 10) + " " + eventTime.substring(11);
+            Date dateToCompare = null;
+            try {
+                dateToCompare = sdf.parse(eventTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (dateToCompare.after(dateNow)) {
+                return event;
+            }
+            else position++;
+        }
+    }
+
+    public void setAlarm(Event event) {
+        Intent receiverIntent = new Intent(MainActivity.this, NotificationService.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 1, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//        //알림 울릴 Event 정보 가져옴
+//        Event event;
+//        long now = System.currentTimeMillis();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date dateNow = new Date(now);
+//        // eventList 내 정보 비교, 적합한 정보 선택
+//        int position = 0;
+//        while (true) {
+//            event = eventList.getEventList().get(position);
+//            String eventTime = event.getStartTime();
+//            eventTime = eventTime.substring(0, 10) + " " + eventTime.substring(11);
+//            Date dateToCompare = null;
+//            try {
+//                dateToCompare = sdf.parse(eventTime);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            if (dateToCompare.after(dateNow)) {
+//                break;
+//            }
+//            else position++;
+//        }
+
+        String eventTime = event.getStartTime();
+        String from = eventTime.substring(0, 10) + " " + eventTime.substring(11);
+
+        //날짜 포맷을 바꿔주는 소스코드
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date datetime = null;
+        try {
+            datetime = dateFormat.parse(from);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.v("test", datetime.toString());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(datetime);
+
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        Log.v("test", "Event given to Alarm Manager");
     }
 }

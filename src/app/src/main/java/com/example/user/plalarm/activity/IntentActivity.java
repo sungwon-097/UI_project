@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,11 @@ public class IntentActivity extends AppCompatActivity {
 
                 FirebaseConfig.putEventData(collectionPath, event);
                 Toast.makeText(act, "일정을 등록하였습니다", Toast.LENGTH_SHORT).show();
+
+//                //알람 설정
+//                ((MainActivity) MainActivity.eventCreatedContext).setAlarm();
+//                //확인용 log
+//                Log.v("test", "Alarm is Set");
 
                 Intent mainIntent = new Intent(IntentActivity.this, MainActivity.class);
                 startActivity(mainIntent);
@@ -114,6 +120,11 @@ public class IntentActivity extends AppCompatActivity {
 
                     FirebaseConfig.putEventData(collectionPath, event);
                     Toast.makeText(act, "일정을 등록하였습니다", Toast.LENGTH_SHORT).show();
+
+//                    //알람 설정
+//                    ((MainActivity) MainActivity.eventCreatedContext).setAlarm();
+//                    //확인용 log
+//                    Log.v("test", "Alarm is Set");
 
                     Intent mainIntent = new Intent(IntentActivity.this, MainActivity.class);
                     startActivity(mainIntent);
