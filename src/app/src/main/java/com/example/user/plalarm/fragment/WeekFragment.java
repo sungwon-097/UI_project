@@ -1,12 +1,11 @@
 package com.example.user.plalarm.fragment;
 
-import static android.content.ContentValues.TAG;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,40 +21,68 @@ import com.github.tlaabs.timetableview.TimetableView;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class WeekFragment extends Fragment{
+
+    TextView current_day;
     TimetableView timetableView;
     ArrayList<Schedule> schedules = new ArrayList<Schedule>();
-    String collectionPath = "user"; // TODO : 경로를 핸들링 해야 함
+    String collectionPath = "test"; // TODO : 경로를 핸들링 해야 함
 
+    LocalDate localDate = LocalDate.now();
+    String currentDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_week, container, false);
+
         timetableView = view.findViewById(R.id.timetable);
-        schedules = MakeData(new EventListDAO(collectionPath).getEventItems());
+        schedules = MakeData(new EventListDAO(collectionPath).getWeekEventItems(currentDate));
+        current_day = (TextView)view.findViewById(R.id.check_day);
+        current_day.setText(localDate.getYear() + "년 " + localDate.getMonthValue() + "월 " + getWeekOfMonth(localDate)+"주");
 
         return view;
     }
+
+    private int getWeekOfMonth(LocalDate localDate) {
+
+        LocalDate resultDate = localDate;
+        int numberOfWeek = 1;
+        while(true){
+            resultDate = resultDate.minusDays(7);
+            if (resultDate.getMonth() != localDate.getMonth())
+                break;
+            numberOfWeek += 1;
+        }
+        return numberOfWeek;
+    }
+
     public ArrayList<Schedule> MakeData(EventList eventList){
         Schedule schedule = new Schedule();
         for (Event e:eventList.getEventList()){
             String title = e.getTitle();
-            String dayOfWeek = e.getStartTime().substring(0,10);
             schedule.setClassTitle(title);
-            schedule.setDay(getWeekOfDay(e.getStartTime()));
+            schedule.setDay(sevenToZero(getWeekDay(e.getStartTime())));
             schedule.setStartTime(getTime(e.getStartTime()));
             schedule.setEndTime(getTime(e.getEndTime()));
-            Log.d(TAG, "Title: " + schedule.getClassTitle() + "// Time : " + schedule.getStartTime().getHour() + "// Time : "+ schedule.getEndTime().getHour());
             schedules.add(schedule);
             timetableView.add(schedules);
         }
         return schedules;
     }
 
-    public int getWeekOfDay(String date){
+    public int sevenToZero(long weekDay){
+        if (weekDay == 7)
+            return 0;
+        return (int) weekDay;
+    }
+
+    public int getWeekDay(String date){
         int year = Integer.parseInt(date.substring(0, 4));
         int month = Integer.parseInt(date.substring(5, 7));
         int day = Integer.parseInt(date.substring(8, 10));
