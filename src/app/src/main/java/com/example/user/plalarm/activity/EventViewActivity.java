@@ -8,12 +8,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,20 +40,46 @@ import org.threeten.bp.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventViewActivity extends AppCompatActivity implements OnDateSelectedListener {
+public class EventViewActivity extends AppCompatActivity implements OnDateSelectedListener, View.OnClickListener {
 
-    //ListView mListView;
-    String collectionPath = "user";
-    ArrayList<String> Start_Date;
-    ArrayList<String> Title;
+    String collectionPath = "test";
+    Button week, day, soundButton;
+    ImageButton setting, newButton;
+    ImageView notificationOnIcon;
+    ImageView notificationOffIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_view);
-        //mListView = (ListView) findViewById(R.id.day_list);
 
+        Log.d(TAG, "onCreate: EventViewActivity");
+        week = findViewById(R.id.week);
+        day = findViewById(R.id.day);
+        setting = findViewById(R.id.setting_button);
+        newButton = findViewById(R.id.new_button);
+        notificationOnIcon = findViewById(R.id.notification_on_icon);
+        notificationOffIcon = findViewById(R.id.notification_mute_icon);
+        soundButton = findViewById(R.id.sound_button);
 
+        week.setOnClickListener(this);
+        day.setOnClickListener(this);
+        setting.setOnClickListener(this);
+        newButton.setOnClickListener(this);
+        soundButton.setOnClickListener(this);
+        notificationOnIcon.setOnClickListener(this);
+        notificationOffIcon.setOnClickListener(this);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        // sharedPref 로 notification button 의 상태 저장
+        boolean NOTIFICATION_MUTE = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
+        if (NOTIFICATION_MUTE) {
+            notificationOnIcon.setVisibility(View.INVISIBLE);
+            notificationOffIcon.setVisibility(View.VISIBLE);
+        }else{
+            notificationOnIcon.setVisibility(View.VISIBLE);
+            notificationOffIcon.setVisibility(View.INVISIBLE);
+        }
         MaterialCalendarView calendarView = (MaterialCalendarView) findViewById(R.id.material_calendarA);
         calendarView.addDecorators(new DayViewDecorator() {
             @Override
@@ -123,15 +155,17 @@ public class EventViewActivity extends AppCompatActivity implements OnDateSelect
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(EventViewActivity.this,EventActivity.class);
                         intent.putExtra("change",event);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent);
                     }
                 });
                 builder.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        Intent intent = new Intent(EventViewActivity.this,EventDeleteActvitiy.class);
-//                        intent.putExtra("delete",event);
-//                        startActivity(intent);
+                        Intent intent = new Intent(EventViewActivity.this,EventDeleteActivity.class);
+                        intent.putExtra("delete",event);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
                     }
                 });
                 builder.show();
@@ -166,5 +200,56 @@ public class EventViewActivity extends AppCompatActivity implements OnDateSelect
         result = date_arr[0] + "년 " + date_arr[1] + "월 " + date_arr[2] + "일 "
                 + clock_arr[0] + "시 " + clock_arr[1] + "분 ";
         return result;
+    }
+
+    @Override
+    public void onClick(View v) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (v == soundButton) {
+            if(notificationOnIcon.getVisibility() == View.VISIBLE) {
+                notificationOnIcon.setVisibility(View.INVISIBLE);
+                notificationOffIcon.setVisibility(View.VISIBLE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("NOTIFICATION_MUTE", true);
+                editor.apply();
+            }
+            else {
+                notificationOnIcon.setVisibility(View.VISIBLE);
+                notificationOffIcon.setVisibility(View.INVISIBLE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("NOTIFICATION_MUTE", false);
+                editor.apply();
+            }
+        }
+        else if (v == week | v == day) {
+            onBackPressed();
+        }
+        else if (v == setting) {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+        }
+            //NewButton 을 클릭할 경우, 일정 생성 Activity 로 넘어감
+            //현재 일정 생성 Activity 가 만들어지지 않았으므로 MainActivity 로 가도록 해놓았음, 추후 수정
+        else if (v == newButton) {
+            Intent intent = new Intent(this, EventActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if(notificationOnIcon.getVisibility() == View.VISIBLE) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("NOTIFICATION_MUTE", false);
+            editor.apply();
+        }
+        else {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("NOTIFICATION_MUTE", true);
+            editor.apply();
+        }
     }
 }

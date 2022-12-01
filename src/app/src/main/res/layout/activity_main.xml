@@ -69,29 +69,31 @@
             android:id="@+id/calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="calendar"
+            android:text="일정 수정"
+            android:backgroundTint="#FFBC00"
         />
         <Button
             android:id="@+id/week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/calendar"
+            android:backgroundTint="#FFBC00"
+            android:layout_marginStart="20dp"
             android:text="week"
             />
         <Button
             android:id="@+id/day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/week"
             android:text="day"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="#FFBC00"
             />
         <Button
             android:id="@+id/notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/day"
             android:text="noti"
+            android:visibility="gone"
             />
     </LinearLayout>
 
@@ -108,8 +110,8 @@
         android:layout_height="100dp"
         android:scaleType="fitCenter"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:background="#00000000"
         android:src="@drawable/add_icon"/>

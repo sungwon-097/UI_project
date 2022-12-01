@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,16 +8,101 @@
     tools:context=".activity.EventViewActivity">
 
     <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true">
+
+        <!--        소리 활성화,비활성화 전환 버튼-->
+        <Button
+            android:id="@+id/sound_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#00000000" />
+
+        <!--        소리 활성화 아이콘-->
+        <ImageView
+            android:id="@+id/notification_on_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/notification_on" />
+
+        <!--        소리 비활성화 아이콘-->
+        <ImageView
+            android:id="@+id/notification_mute_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/notification_mute" />
+
+    </FrameLayout>
+
+    <!--    화면 중앙 위의 아이콘-->
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/logo"/>
+
+    <!--    설정 버튼-->
+    <ImageButton
+        android:id="@+id/setting_button"
+        android:scaleType="fitXY"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="15dp"
+        android:layout_alignParentEnd="true"
+        android:background="#00000000"
+        android:src="@drawable/gear"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_margin="15dp"
-            android:src="@drawable/logo"
-            android:layout_gravity="left"/>
-    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="100dp"
+        android:gravity="center_horizontal"
+        >
+        <Button
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일정 수정"
+            android:backgroundTint="#FFBC00"
+            />
+        <Button
+            android:id="@+id/week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFBC00"
+            android:layout_marginStart="20dp"
+            android:text="week"
+            />
+        <Button
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="day"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="#FFBC00"
+            />
+        <Button
+            android:id="@+id/notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="noti"
+            android:visibility="gone"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -32,4 +117,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-</LinearLayout>
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/new_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#00000000"
+        android:src="@drawable/add_icon"/>
+</RelativeLayout>
