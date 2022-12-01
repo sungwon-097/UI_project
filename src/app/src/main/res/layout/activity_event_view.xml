@@ -17,13 +17,6 @@
             android:layout_margin="15dp"
             android:src="@drawable/logo"
             android:layout_gravity="left"/>
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="일정 편집"-->
-<!--            android:textSize="35sp"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:gravity="center"/>-->
     </FrameLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -31,10 +24,12 @@
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView
             android:id="@+id/material_calendarA"
             android:layout_width="wrap_content"
-            android:layout_height="500dp"
+            android:layout_height="450dp"
             app:mcv_selectionMode="single"/>
     </LinearLayout>
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:id="@+id/day_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </LinearLayout>
