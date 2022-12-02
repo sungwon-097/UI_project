@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class DayFragment extends Fragment {
+public class DayFragment extends Fragment{
 
     TextView current_day;
     RecyclerView recyclerView;
@@ -44,8 +44,8 @@ public class DayFragment extends Fragment {
         ArrayList<String> Week = new ArrayList<>(Arrays.asList("일요일","월요일","화요일"
                 ,"수요일","목요일","금요일","토요일","일요일"));
 
-        current_day = (TextView)view.findViewById(R.id.check_day);
-        recyclerView = view.findViewById(R.id.recycler_view);
+        current_day = (TextView)view.findViewById(R.id.check_day1);
+        recyclerView = view.findViewById(R.id.recycler_view1);
 
         current_day.setText(getCurrentDate() + " " + Week.get(getCurrentWeek()-1));
 

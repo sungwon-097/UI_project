@@ -41,9 +41,9 @@ public class WeekFragment extends Fragment{
 
         View view = inflater.inflate(R.layout.fragment_week, container, false);
 
-        timetableView = view.findViewById(R.id.timetable);
+        timetableView = view.findViewById(R.id.timetable1);
         schedules = MakeData(new EventListDAO(collectionPath).getWeekEventItems(currentDate));
-        current_day = (TextView)view.findViewById(R.id.check_day);
+        current_day = (TextView)view.findViewById(R.id.check_day1);
         current_day.setText(localDate.getYear() + "년 " + localDate.getMonthValue() + "월 " + getWeekOfMonth(localDate)+"주");
 
         return view;

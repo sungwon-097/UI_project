@@ -19,11 +19,11 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_gravity="center"
-            android:id="@+id/check_day"/>
+            android:id="@+id/check_day1"/>
     </LinearLayout>
 
     <com.github.tlaabs.timetableview.TimetableView
-        android:id="@+id/timetable"
+        android:id="@+id/timetable1"
         app:cell_height="21dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
