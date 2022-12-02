@@ -21,9 +21,10 @@ public class LogoActivity extends AppCompatActivity {
             @Override
             public void run()
             {
-                Intent intent = new Intent(LogoActivity.this, MainActivity.class);
+                // Logo -> EventViewActivity
+                Intent intent = new Intent(LogoActivity.this, DayViewActivity.class);
                 startActivity(intent);
             }
-        }, 200);
+        }, 1500);
     }
 }
