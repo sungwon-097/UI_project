@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.plalarm.EventListDAO;
 import com.example.user.plalarm.R;
@@ -36,6 +37,7 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
 
     LocalDate localDate = LocalDate.now();
     String currentDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    private long pressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,7 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         if (view == calendar) {
-            Intent intent = new Intent(WeekViewActivity.this, EventViewActivity.class);
+            Intent intent = new Intent(WeekViewActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
         }
@@ -126,6 +128,23 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
         else if (view == newButton) {
             Intent intent = new Intent(WeekViewActivity.this, EventActivity.class);
             startActivity(intent);
+        }
+    }
+    @Override
+    public void onBackPressed() {// backButton 2번누르면 나가짐
+
+        //마지막으로 누른 '뒤로가기' 버튼 클릭 시간이 이전의 '뒤로가기' 버튼 클릭 시간과의 차이가 2초보다 크면
+        if(System.currentTimeMillis() > pressedTime + 2000){
+            //현재 시간을 pressedTime 에 저장
+            pressedTime = System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"한번 더 누르면 종료", Toast.LENGTH_SHORT).show();
+        }
+
+        //마지막 '뒤로가기' 버튼 클릭시간이 이전의 '뒤로가기' 버튼 클릭 시간과의 차이가 2초보다 작으면
+        else{
+            finishAffinity();
+            System.runFinalization();
+            System.exit(0);
         }
     }
 }
