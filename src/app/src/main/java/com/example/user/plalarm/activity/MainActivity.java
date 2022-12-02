@@ -155,17 +155,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (fragment){
             case 1:
                 CalendarFragment cf = new CalendarFragment();
-                transaction.replace(R.id.fragment_container, cf);
+                transaction.replace(R.id.fragment_container2, cf);
                 transaction.commit();
                 break;
             case 2:
                 WeekFragment wf = new WeekFragment();
-                transaction.replace(R.id.fragment_container, wf);
+                transaction.replace(R.id.fragment_container2, wf);
                 transaction.commit();
                 break;
             case 3:
                 DayFragment df = new DayFragment();
-                transaction.replace(R.id.fragment_container, df);
+                transaction.replace(R.id.fragment_container2, df);
                 transaction.commit();
                 break;
         }

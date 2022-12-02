@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.user.plalarm.EventListDAO;
 import com.example.user.plalarm.R;
+import com.example.user.plalarm.fragment.TopFragment;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.model.EventList;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -43,10 +45,12 @@ import java.util.List;
 public class EventViewActivity extends AppCompatActivity implements OnDateSelectedListener, View.OnClickListener {
 
     String collectionPath = "test";
-    Button week, day, soundButton;
-    ImageButton setting, newButton;
-    ImageView notificationOnIcon;
-    ImageView notificationOffIcon;
+    Button week, day;
+//    Button soundButton;
+//    ImageButton setting;
+    ImageButton newButton;
+//    ImageView notificationOnIcon;
+//    ImageView notificationOffIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,30 +60,38 @@ public class EventViewActivity extends AppCompatActivity implements OnDateSelect
         Log.d(TAG, "onCreate: EventViewActivity");
         week = findViewById(R.id.week);
         day = findViewById(R.id.day);
-        setting = findViewById(R.id.setting_button);
+//        setting = findViewById(R.id.setting_button);
         newButton = findViewById(R.id.new_button);
-        notificationOnIcon = findViewById(R.id.notification_on_icon);
-        notificationOffIcon = findViewById(R.id.notification_mute_icon);
-        soundButton = findViewById(R.id.sound_button);
+//        notificationOnIcon = findViewById(R.id.notification_on_icon);
+//        notificationOffIcon = findViewById(R.id.notification_mute_icon);
+//        soundButton = findViewById(R.id.sound_button);
 
         week.setOnClickListener(this);
         day.setOnClickListener(this);
-        setting.setOnClickListener(this);
+//        setting.setOnClickListener(this);
         newButton.setOnClickListener(this);
-        soundButton.setOnClickListener(this);
-        notificationOnIcon.setOnClickListener(this);
-        notificationOffIcon.setOnClickListener(this);
+//        soundButton.setOnClickListener(this);
+//        notificationOnIcon.setOnClickListener(this);
+//        notificationOffIcon.setOnClickListener(this);
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        // sharedPref 로 notification button 의 상태 저장
-        boolean NOTIFICATION_MUTE = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
-        if (NOTIFICATION_MUTE) {
-            notificationOnIcon.setVisibility(View.INVISIBLE);
-            notificationOffIcon.setVisibility(View.VISIBLE);
-        }else{
-            notificationOnIcon.setVisibility(View.VISIBLE);
-            notificationOffIcon.setVisibility(View.INVISIBLE);
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        // sharedPref 로 notification button 의 상태 저장
+//        boolean NOTIFICATION_MUTE = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
+//        if (NOTIFICATION_MUTE) {
+//            notificationOnIcon.setVisibility(View.INVISIBLE);
+//            notificationOffIcon.setVisibility(View.VISIBLE);
+//        }else{
+//            notificationOnIcon.setVisibility(View.VISIBLE);
+//            notificationOffIcon.setVisibility(View.INVISIBLE);
+//        }
+        // Fragment
+        TopFragment tf = new TopFragment();
+        if (!tf.isVisible()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container_calendar, tf);
+            transaction.commit();
         }
+
         MaterialCalendarView calendarView = (MaterialCalendarView) findViewById(R.id.material_calendarA);
         calendarView.addDecorators(new DayViewDecorator() {
             @Override
@@ -175,7 +187,7 @@ public class EventViewActivity extends AppCompatActivity implements OnDateSelect
 
 
     public String[] getDate(CalendarDay date) {//터치 한 날짜 값 파싱
-        String parse = date.toString();//date를 문자로 변환
+        String parse = date.toString();//date 를 문자로 변환
         int start_num = parse.indexOf("{") + 1;//{의 다음 위치값
         String result = parse.substring(start_num, (parse.substring(start_num).indexOf("}") + start_num));//{}안에 들어있는 데이터 뽑아오기
         return result.split("-");
@@ -203,53 +215,71 @@ public class EventViewActivity extends AppCompatActivity implements OnDateSelect
     }
 
     @Override
-    public void onClick(View v) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (v == soundButton) {
-            if(notificationOnIcon.getVisibility() == View.VISIBLE) {
-                notificationOnIcon.setVisibility(View.INVISIBLE);
-                notificationOffIcon.setVisibility(View.VISIBLE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("NOTIFICATION_MUTE", true);
-                editor.apply();
-            }
-            else {
-                notificationOnIcon.setVisibility(View.VISIBLE);
-                notificationOffIcon.setVisibility(View.INVISIBLE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("NOTIFICATION_MUTE", false);
-                editor.apply();
-            }
-        }
-        else if (v == week | v == day) {
-            onBackPressed();
-        }
-        else if (v == setting) {
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
-        }
+    public void onClick(View view) {
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        if (v == soundButton) {
+//            if(notificationOnIcon.getVisibility() == View.VISIBLE) {
+//                notificationOnIcon.setVisibility(View.INVISIBLE);
+//                notificationOffIcon.setVisibility(View.VISIBLE);
+//                SharedPreferences.Editor editor = sharedPref.edit();
+//                editor.putBoolean("NOTIFICATION_MUTE", true);
+//                editor.apply();
+//            }
+//            else {
+//                notificationOnIcon.setVisibility(View.VISIBLE);
+//                notificationOffIcon.setVisibility(View.INVISIBLE);
+//                SharedPreferences.Editor editor = sharedPref.edit();
+//                editor.putBoolean("NOTIFICATION_MUTE", false);
+//                editor.apply();
+//            }
+//        }
+//        else if (v == week | v == day) {
+//            onBackPressed();
+//        }
+
+//        else if (v == setting) {
+//            Intent intent = new Intent(this, SettingActivity.class);
+//            startActivity(intent);
+//        }
             //NewButton 을 클릭할 경우, 일정 생성 Activity 로 넘어감
             //현재 일정 생성 Activity 가 만들어지지 않았으므로 MainActivity 로 가도록 해놓았음, 추후 수정
-        else if (v == newButton) {
-            Intent intent = new Intent(this, EventActivity.class);
+//        if (v == week | v == day) {
+//            onBackPressed();
+//        }
+//        else if (v == newButton) {
+//            Intent intent = new Intent(this, EventActivity.class);
+//            startActivity(intent);
+//        }
+        if (view == week) {
+            Intent intent = new Intent(EventViewActivity.this, WeekViewActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+        else if (view == day) {
+            Intent intent = new Intent(EventViewActivity.this, DayViewActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+        else if (view == newButton) {
+            Intent intent = new Intent(EventViewActivity.this, EventActivity.class);
             startActivity(intent);
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        overridePendingTransition(0, 0);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        if(notificationOnIcon.getVisibility() == View.VISIBLE) {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("NOTIFICATION_MUTE", false);
-            editor.apply();
-        }
-        else {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("NOTIFICATION_MUTE", true);
-            editor.apply();
-        }
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        overridePendingTransition(0, 0);
+//        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//        if(notificationOnIcon.getVisibility() == View.VISIBLE) {
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            editor.putBoolean("NOTIFICATION_MUTE", false);
+//            editor.apply();
+//        }
+//        else {
+//            SharedPreferences.Editor editor = sharedPref.edit();
+//            editor.putBoolean("NOTIFICATION_MUTE", true);
+//            editor.apply();
+//        }
+//    }
 }

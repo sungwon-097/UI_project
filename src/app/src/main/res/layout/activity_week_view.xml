@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.WeekViewActivity">
+
+    <FrameLayout
+        android:id="@+id/fragment_container_week"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_above="@id/header_week"
+        tools:ignore="NotSibling">
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/header_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="100dp"
+            android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일정 수정"
+            android:backgroundTint="#FFBC00" />
+        <Button
+            android:id="@+id/week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFBC00"
+            android:layout_marginStart="20dp"
+            android:text="week" />
+        <Button
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="day"
+            android:layout_marginStart="20dp"
+            android:backgroundTint="#FFBC00" />
+        <Button
+            android:id="@+id/notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="noti"
+            android:visibility="gone" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:id="@+id/check_day"/>
+        </LinearLayout>
+
+        <com.github.tlaabs.timetableview.TimetableView
+            android:id="@+id/timetable"
+            app:cell_height="21dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:header_title="@array/my_header_title"
+            app:column_count="8"
+            app:start_time="0"
+            app:row_count="25"
+            />
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/new_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="#00000000"
+        android:src="@drawable/add_icon"/>
+</RelativeLayout>

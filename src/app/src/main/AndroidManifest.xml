@@ -25,12 +25,27 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="31">
         <activity
+            android:name=".activity.DayViewActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activity.WeekViewActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activity.EventViewActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -100,13 +115,15 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
-                android:value=""/>
+                android:value="" />
         </activity>
-        <receiver android:name=".service.NotificationService"
+
+        <receiver
+            android:name=".service.NotificationService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
