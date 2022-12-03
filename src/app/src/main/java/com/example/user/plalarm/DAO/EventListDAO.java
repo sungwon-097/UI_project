@@ -1,4 +1,4 @@
-package com.example.user.plalarm;
+package com.example.user.plalarm.DAO;
 
 import static android.content.ContentValues.TAG;
 
@@ -48,10 +48,8 @@ public class EventListDAO {
         EventList returnList = new EventList();
         FirebaseDataContainer firebaseDataContainer = new FirebaseDataContainer(collectionPath);
         eventList = firebaseDataContainer.getContainer();
-        Log.d(TAG, "getWeekEventItems: "+ currentDate);
         for (Event e:eventList.getEventList()){
             if(compareIsCurrentWeek(e.getStartTime().substring(0, 10))){
-                Log.d(TAG, "getWeekEventItems: " + e.getStartTime().substring(0, 10));
                 returnList.add(e);
             }
             else
@@ -85,9 +83,7 @@ public class EventListDAO {
 
     public boolean compareIsCurrentWeek(String date){
         LocalDate thisDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-        Log.d(TAG, "compareIsCurrentWeek: " + getSundayDate(currentDate).compareTo(getNextSundayDate(currentDate)));
         Period period = Period.between(getSundayDate(currentDate), getNextSundayDate(currentDate));
-        Log.d(TAG, "compareIsCurrentWeek: " + period.getDays());
 
         if (getSundayDate(currentDate).isBefore(thisDate)||getSundayDate(currentDate).isEqual(thisDate))
             return getNextSundayDate(currentDate).isAfter(thisDate);

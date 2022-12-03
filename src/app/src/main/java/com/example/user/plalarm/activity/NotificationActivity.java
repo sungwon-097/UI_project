@@ -23,32 +23,50 @@ import android.widget.Button;
 
 import com.example.user.plalarm.R;
 import com.example.user.plalarm.config.FirebaseConfig;
+import com.example.user.plalarm.config.FirebaseDataContainer;
 import com.example.user.plalarm.model.Event;
+import com.example.user.plalarm.model.EventList;
 import com.example.user.plalarm.service.TtsService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class NotificationActivity extends AppCompatActivity implements View.OnClickListener{
+public class NotificationActivity extends AppCompatActivity implements Runnable{
+
+    Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
-
-        Button button = findViewById(R.id.notification_button);
-        button.setOnClickListener(this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onClick(View view) {
-        String channelID = "DEFAULT";
 
+    @Override
+    public void run() {
+        makeNotification(event);
+    }
+
+    public void setNotification(Event event){
+
+        this.event = event;
+        Log.d(TAG, "setNotification: ");
+
+        LocalDateTime eventTime = LocalDateTime.parse(event.getStartTime());
+        while(true){
+            LocalDateTime currentTime = LocalDateTime.now();
+            if (eventTime.compareTo(currentTime) == 0){
+                run();
+            }
+        }
+    }
+
+    public void makeNotification(Event event) {
+        String channelID = "DEFAULT";
         createNotificationChannel(channelID, "default", NotificationManager.IMPORTANCE_HIGH);
-        createNotification(channelID, 1, "TTS 테스트", "테스트 중...");
+        createNotification(channelID, 1, event.getTitle(), event.getContent());
         TtsService ttsService = new TtsService(this);
-        ttsService.speak("tts 테스트"); // TODO : event.getContent() 로 치환
-        pendingIntent("com.example.user.plalarm");
+        ttsService.speak(event.getTitle()); // TODO : event.getContent() 로 치환
+        pendingIntent(event.getIntentApp());
     }
 
     public void createNotificationChannel(String channelID, String channelName, int importance){

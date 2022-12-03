@@ -1,18 +1,20 @@
-package com.example.user.plalarm.fragment;
+package com.example.user.plalarm.activity.main;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.example.user.plalarm.EventListDAO;
+import com.example.user.plalarm.DAO.EventListDAO;
 import com.example.user.plalarm.R;
+import com.example.user.plalarm.activity.EventActivity;
+import com.example.user.plalarm.fragment.TopFragment;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.model.EventList;
 import com.github.tlaabs.timetableview.Schedule;
@@ -24,7 +26,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class WeekFragment extends Fragment{
+public class WeekViewActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Button calendar, day;
+    ImageButton newButton;
 
     TextView current_day;
     TimetableView timetableView;
@@ -35,18 +40,31 @@ public class WeekFragment extends Fragment{
     String currentDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
     @SuppressLint("SetTextI18n")
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_week_view);
 
-        View view = inflater.inflate(R.layout.fragment_week, container, false);
+        calendar = findViewById(R.id.calendar);
+        day = findViewById(R.id.day);
+        newButton = findViewById(R.id.new_button);
 
-        timetableView = view.findViewById(R.id.timetable1);
+        calendar.setOnClickListener(this);
+        day.setOnClickListener(this);
+        newButton.setOnClickListener(this);
+
+        timetableView = (TimetableView) findViewById(R.id.timetable);
         schedules = MakeData(new EventListDAO(collectionPath).getWeekEventItems(currentDate));
-        current_day = (TextView)view.findViewById(R.id.check_day1);
+        current_day = (TextView)findViewById(R.id.check_day);
         current_day.setText(localDate.getYear() + "년 " + localDate.getMonthValue() + "월 " + getWeekOfMonth(localDate)+"주");
 
-        return view;
+        // Fragment
+        TopFragment tf = new TopFragment();
+        if (!tf.isVisible()) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container_week, tf);
+            transaction.commit();
+        }
     }
 
     private int getWeekOfMonth(LocalDate localDate) {
@@ -61,7 +79,6 @@ public class WeekFragment extends Fragment{
         }
         return numberOfWeek;
     }
-
     public ArrayList<Schedule> MakeData(EventList eventList){
         Schedule schedule = new Schedule();
         for (Event e:eventList.getEventList()){
@@ -75,7 +92,6 @@ public class WeekFragment extends Fragment{
         }
         return schedules;
     }
-
     public int sevenToZero(long weekDay){
         if (weekDay == 7)
             return 0;
@@ -99,7 +115,20 @@ public class WeekFragment extends Fragment{
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onClick(View view) {
+        if (view == calendar) {
+            Intent intent = new Intent(WeekViewActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+        else if (view == day) {
+            Intent intent = new Intent(WeekViewActivity.this, DayViewActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+        else if (view == newButton) {
+            Intent intent = new Intent(WeekViewActivity.this, EventActivity.class);
+            startActivity(intent);
+        }
     }
 }

@@ -99,51 +99,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 분 "
+                android:text=" 분 부터"
                 />
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="종료 시간"
-            />
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:gravity="center"-->
-<!--            >-->
-<!--            <NumberPicker-->
-<!--                android:id="@+id/endYear"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                />-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text=" 년 "-->
-<!--                />-->
-<!--            <NumberPicker-->
-<!--                android:id="@+id/endMonth"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                />-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text=" 월 "-->
-<!--                />-->
-<!--            <NumberPicker-->
-<!--                android:id="@+id/endDate"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                />-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text=" 일 "-->
-<!--                />-->
-<!--        </LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -168,13 +126,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 분 "
+                android:text=" 분 까지"
                 />
         </LinearLayout>
         <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FF8800"
             android:text="일정 등록"
             />
     </LinearLayout>

@@ -1,7 +1,5 @@
 package com.example.user.plalarm.fragment;
 
-import static android.preference.PreferenceManager.getDefaultSharedPreferences;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.user.plalarm.R;
-import com.example.user.plalarm.activity.MainActivity;
 import com.example.user.plalarm.activity.SettingActivity;
 
 import javax.annotation.Nullable;
