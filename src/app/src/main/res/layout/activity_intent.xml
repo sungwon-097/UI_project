@@ -18,6 +18,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FF8800"
         android:text="앱 등록하지 않기"
         android:layout_gravity="bottom|right"
         />
