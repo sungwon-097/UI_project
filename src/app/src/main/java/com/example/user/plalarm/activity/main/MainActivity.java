@@ -20,6 +20,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
@@ -80,7 +81,12 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         Event getEvent = (Event) eventIntent.getSerializableExtra("event");
 
         if(getEvent != null) {
-            makeNotification(getEvent); // TODO : 시간에 맞게 알람이 울리게 해야 함
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    makeNotification(getEvent); // TODO : 시간에 맞게 알람이 울리게 해야 함
+                }
+            }, 3000);
         }
 
         TopFragment tf = new TopFragment();
