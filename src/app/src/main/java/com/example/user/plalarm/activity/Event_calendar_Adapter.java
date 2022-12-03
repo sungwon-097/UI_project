@@ -51,8 +51,8 @@ public class Event_calendar_Adapter extends BaseAdapter{
         Event event = items.get(position);
 
         title.setText(event.getTitle());
-        start_time.setText(parsing_date(event.getStartTime()));
-        end_time.setText(parsing_date(event.getEndTime()));
+        start_time.setText(event.getStartTime());
+        end_time.setText(event.getEndTime());
 
         return convertView;
     }
@@ -70,15 +70,5 @@ public class Event_calendar_Adapter extends BaseAdapter{
         i.setIntentApp(event.getIntentApp());
 
         items.add(i);
-    }
-    public String parsing_date(String s) {
-        String result;
-        String[] date_arr, clock_arr;
-        String[] parse = s.split("T");
-        date_arr = parse[0].split("-");
-        clock_arr = parse[1].split(":");
-//        result = date_arr[0] + "년 " + date_arr[1] + "월 " + date_arr[2] + "일 "
-//                + clock_arr[0] + "시 " + clock_arr[1] + "분 ";
-        return clock_arr[0] + "시 " + clock_arr[1] + "분 ";
     }
 }

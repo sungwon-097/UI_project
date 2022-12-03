@@ -25,7 +25,7 @@ public class EventDeleteActivity extends AppCompatActivity {
         FirebaseConfig.deleteData(collectionPath, event.getStartTime()+event.getTitle());
 
         Toast.makeText(this, event.getTitle() + "일정이 삭제 되었습니다", Toast.LENGTH_SHORT).show();
-        intent = new Intent(this, MainActivity.class);
+        intent = new Intent(this, EventViewActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
