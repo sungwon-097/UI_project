@@ -1,4 +1,4 @@
-package com.example.user.plalarm.activity;
+package com.example.user.plalarm.activity.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,8 +12,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.user.plalarm.EventListDAO;
+import com.example.user.plalarm.DAO.EventListDAO;
 import com.example.user.plalarm.R;
+import com.example.user.plalarm.activity.EventActivity;
 import com.example.user.plalarm.fragment.DayAdapter;
 import com.example.user.plalarm.fragment.TopFragment;
 
@@ -90,7 +91,7 @@ public class DayViewActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view == calendar) {
-            Intent intent = new Intent(DayViewActivity.this, EventViewActivity.class);
+            Intent intent = new Intent(DayViewActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
         }

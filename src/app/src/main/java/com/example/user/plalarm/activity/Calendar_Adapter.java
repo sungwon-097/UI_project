@@ -9,13 +9,12 @@ import android.widget.TextView;
 
 import com.example.user.plalarm.R;
 import com.example.user.plalarm.model.Event;
-import com.example.user.plalarm.model.EventList;
 
 import java.util.ArrayList;
 
-public class Event_calendar_Adapter extends BaseAdapter{
+public class Calendar_Adapter extends BaseAdapter{
     ArrayList<Event> items = new ArrayList<>();
-    //EventList eventList = new EventList();
+
     @Override
     public int getCount() {
         return items.size();
@@ -42,24 +41,14 @@ public class Event_calendar_Adapter extends BaseAdapter{
         TextView start_time = (TextView)convertView.findViewById(R.id.list_start);
         TextView end_time = (TextView)convertView.findViewById(R.id.list_end);
 
-        //EventList eventList = new EventList();
-//        for(Event e:eventList.getEventList()){
-//            title.setText(e.getTitle());
-//            start_time.setText(e.getStartTime());
-//            end_time.setText(e.getEndTime());
-//        }
         Event event = items.get(position);
 
         title.setText(event.getTitle());
-        start_time.setText(event.getStartTime());
-        end_time.setText(event.getEndTime());
+        start_time.setText(parsing_date(event.getStartTime()));
+        end_time.setText(parsing_date(event.getEndTime()));
 
         return convertView;
     }
-//    public void setItems(EventList eventList){
-//        this.eventList = (EventList) eventList;
-//    }
-
     public void addItem(Event event){
 
         Event i = new Event();
@@ -70,5 +59,13 @@ public class Event_calendar_Adapter extends BaseAdapter{
         i.setIntentApp(event.getIntentApp());
 
         items.add(i);
+    }
+    public String parsing_date(String s) {
+        String result;
+        String[] date_arr, clock_arr;
+        String[] parse = s.split("T");
+        date_arr = parse[0].split("-");
+        clock_arr = parse[1].split(":");
+        return clock_arr[0] + "시 " + clock_arr[1] + "분 ";
     }
 }

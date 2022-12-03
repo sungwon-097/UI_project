@@ -8,43 +8,53 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:text="hi"
-            android:textSize="40dp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"
-            android:id="@+id/list_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
             <TextView
-                android:text="hi2"
-                android:textSize="23dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:id="@+id/list_start"
+                android:text="event title"
+                android:textSize="25dp"
                 android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="~"
-                android:textSize="30dp"
                 android:layout_gravity="center"
-                android:textColor="@color/black"
+                android:id="@+id/list_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:text="hi3"
-                android:layout_weight="1"
-                android:textSize="23dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:id="@+id/list_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                >
+                <TextView
+                    android:text="00분"
+                    android:textSize="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:id="@+id/list_start"
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@+id/dash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="-"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:id="@+id/dash"
+                    android:layout_toRightOf="@id/list_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:text="00시"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:id="@+id/list_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

@@ -45,9 +45,5 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         });
-
-        // 이후 추가적인 설정은 여기부터
     }
-
-
 }

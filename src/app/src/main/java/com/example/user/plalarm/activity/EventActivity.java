@@ -79,7 +79,6 @@ public class EventActivity extends AppCompatActivity{
         boolean finalChangeFlag = changeFlag;
         String finalChangedTitle = changedTitle;
         submitButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 startDt = LocalDateTime.of(startYear.getValue(), startMonth.getValue(), startDate.getValue(), startHour.getValue(), startMinute.getValue());
