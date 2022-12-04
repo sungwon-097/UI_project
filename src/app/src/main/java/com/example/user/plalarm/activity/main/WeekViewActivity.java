@@ -71,6 +71,20 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
 
         LocalDate resultDate = localDate;
         int numberOfWeek = 1;
+
+        // 이번 달이 일요일로 시작하는지의 여부
+        boolean startsWithSunday = false;
+        LocalDate monthStartDate = localDate.minusDays(resultDate.getDayOfMonth() - 1);
+        if (monthStartDate.getDayOfWeek().getValue() == 7) startsWithSunday = true;
+
+        // 일요일로 시작하지 않는 경우 추가적 계산 해놓는다
+        if (!startsWithSunday) {
+            int firstWeekDays = resultDate.getDayOfWeek().getValue() - monthStartDate.getDayOfWeek().getValue();
+            if (localDate.getDayOfWeek().getValue() <= firstWeekDays) return numberOfWeek;
+            resultDate = monthStartDate.plusDays(firstWeekDays);
+            numberOfWeek += 1;
+        }
+        // 기존 Logic 사용하여 계산
         while(true){
             resultDate = resultDate.minusDays(7);
             if (resultDate.getMonth() != localDate.getMonth())
