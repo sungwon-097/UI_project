@@ -61,7 +61,9 @@ public class EventListDAO {
     public long getWeekDays(String date){
         String currentDate = date.substring(0, 10);
         LocalDate localDate = LocalDate.parse(currentDate, DateTimeFormatter.ISO_DATE);
-        return localDate.getDayOfWeek().getValue();
+        long result = localDate.getDayOfWeek().getValue();
+        if (result == 7) result = 0;
+        return result;
     }
 
     public LocalDate getSundayDate(String date){
