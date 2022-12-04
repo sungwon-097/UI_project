@@ -40,22 +40,24 @@ public class BackgroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand: ");
         Thread t1 = new Thread("T1"){
-            public void run(){
+            public synchronized void run(){
                 while(true) {
                     getFirebaseData(collectionPath);
                     if (container != null) {
                         for (Event e : container.getEventList()) {
+                            if (container == null)
+                                break;
                             Log.d(TAG, "onStartCommand: t1");
                             LocalDateTime currentTime = LocalDateTime.now();
                             LocalDateTime thisTime = LocalDateTime.parse(e.getStartTime());
-                            if (currentTime.compareTo(thisTime) < 0) {
+                            if (currentTime.compareTo(thisTime) <= 0) {
                                 todoEvent = e;
                                 break;
                             }
                         }
                     }
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -63,7 +65,7 @@ public class BackgroundService extends Service {
             }
         };
         Thread t2 = new Thread("T2"){
-            public void run(){
+            public synchronized void run(){
                 while(true) {
                     if (todoEvent==null)
                         continue;
