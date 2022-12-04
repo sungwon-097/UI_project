@@ -40,6 +40,7 @@ import com.example.user.plalarm.activity.Calendar_Adapter;
 import com.example.user.plalarm.fragment.TopFragment;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.model.EventList;
+import com.example.user.plalarm.service.BackgroundService;
 import com.example.user.plalarm.service.TtsService;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -77,17 +78,8 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         day.setOnClickListener(this);
         newButton.setOnClickListener(this);
 
-        Intent eventIntent = getIntent();
-        Event getEvent = (Event) eventIntent.getSerializableExtra("event");
-
-        if(getEvent != null) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    makeNotification(getEvent); // TODO : 시간에 맞게 알람이 울리게 해야 함
-                }
-            }, 3000);
-        }
+        // service start
+        startService(new Intent(MainActivity.this, BackgroundService.class));
 
         TopFragment tf = new TopFragment();
         if (!tf.isVisible()) {
