@@ -31,33 +31,16 @@ import com.example.user.plalarm.service.TtsService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class NotificationActivity extends AppCompatActivity implements Runnable{
+public class NotificationActivity extends AppCompatActivity{
 
     Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-
-    @Override
-    public void run() {
+        Intent intent = getIntent();
+        Event event = (Event) intent.getSerializableExtra("event");
         makeNotification(event);
-    }
-
-    public void setNotification(Event event){
-
-        this.event = event;
-        Log.d(TAG, "setNotification: ");
-
-        LocalDateTime eventTime = LocalDateTime.parse(event.getStartTime());
-        while(true){
-            LocalDateTime currentTime = LocalDateTime.now();
-            if (eventTime.compareTo(currentTime) == 0){
-                run();
-            }
-        }
+        super.onCreate(savedInstanceState);
     }
 
     public void makeNotification(Event event) {
