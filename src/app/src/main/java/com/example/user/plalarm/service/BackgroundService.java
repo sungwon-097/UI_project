@@ -7,12 +7,15 @@ import static com.example.user.plalarm.config.FirebaseDataContainer.container;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.user.plalarm.activity.NotificationActivity;
+import com.example.user.plalarm.activity.main.MainActivity;
 import com.example.user.plalarm.model.Event;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -71,7 +74,9 @@ public class BackgroundService extends Service {
                         continue;
                     String currentTime = LocalDateTime.now().toString().substring(0, 16);
                     String thisTime= todoEvent.getStartTime().substring(0, 16);
-                    if (currentTime.equals(thisTime)){
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(BackgroundService.this);
+                    boolean NOTIFICATION_MUTE_BACKGROUND = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
+                    if (currentTime.equals(thisTime) && !NOTIFICATION_MUTE_BACKGROUND){
                         Intent intent1 = new Intent(BackgroundService.this, NotificationActivity.class);
                         intent1.putExtra("event", todoEvent);
                         intent1.addFlags(FLAG_ACTIVITY_NEW_TASK);
