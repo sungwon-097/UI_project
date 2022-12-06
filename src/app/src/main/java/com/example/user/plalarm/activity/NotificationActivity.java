@@ -55,6 +55,9 @@ public class NotificationActivity extends AppCompatActivity{
         ttsService.speak(event.getTitle()); // TODO : event.getContent() 로 치환
         if (!Objects.equals(event.getIntentApp(), ""))
             pendingIntent(event.getIntentApp());
+        else{
+            finish();
+        }
     }
 
     public void createNotificationChannel(String channelID, String channelName, int importance){

@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -67,6 +70,34 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
             transaction.replace(R.id.fragment_container_week, tf);
             transaction.commit();
         }
+        timetableView.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
+            @Override
+            public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(WeekViewActivity.this);
+                //builder.setTitle(schedules.get(idx - 1).getClassTitle());
+                Log.d("check11111", idx+"");
+                for(Schedule s: schedules){
+                    Log.d("hihihihi",s + "" + idx + "") ;
+                }
+                builder.setMessage("하이");
+                builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Event event = new Event();
+//                        Intent intent = new Intent(WeekViewActivity.this, EventActivity.class);
+//                        intent.putExtra("1","1");
+
+                    }
+                });
+                builder.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     private int getWeekOfMonth(LocalDate localDate) {
@@ -103,6 +134,8 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
             schedule.setDay(sevenToZero(getWeekDay(e.getStartTime())));
             schedule.setStartTime(getTime(e.getStartTime()));
             schedule.setEndTime(getTime(e.getEndTime()));
+            schedule.setClassPlace(e.getContent());//내용받아오는 class
+            schedule.setProfessorName(e.getIntentApp());//실행 앱
             schedules.add(schedule);
             timetableView.add(schedules);
         }

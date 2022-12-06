@@ -71,7 +71,7 @@
 
         <com.github.tlaabs.timetableview.TimetableView
             android:id="@+id/timetable"
-            app:cell_height="21dp"
+            app:cell_height="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:header_title="@array/my_header_title"
