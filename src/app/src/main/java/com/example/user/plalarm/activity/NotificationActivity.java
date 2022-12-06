@@ -30,6 +30,7 @@ import com.example.user.plalarm.service.TtsService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 public class NotificationActivity extends AppCompatActivity{
 
@@ -49,7 +50,8 @@ public class NotificationActivity extends AppCompatActivity{
         createNotification(channelID, 1, event.getTitle(), event.getContent());
         TtsService ttsService = new TtsService(this);
         ttsService.speak(event.getTitle()); // TODO : event.getContent() 로 치환
-        pendingIntent(event.getIntentApp());
+        if (!Objects.equals(event.getIntentApp(), ""))
+            pendingIntent(event.getIntentApp());
     }
 
     public void createNotificationChannel(String channelID, String channelName, int importance){
