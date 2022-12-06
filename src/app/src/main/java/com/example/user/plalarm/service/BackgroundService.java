@@ -61,7 +61,7 @@ public class BackgroundService extends Service {
                         }
                     }
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -83,10 +83,10 @@ public class BackgroundService extends Service {
                         intent1.putExtra("event", todoEvent);
                         intent1.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent1);
-                        break;
+                        todoEvent = null;
                     }
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
