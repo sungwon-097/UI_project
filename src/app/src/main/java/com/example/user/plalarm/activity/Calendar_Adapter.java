@@ -38,8 +38,8 @@ public class Calendar_Adapter extends BaseAdapter{
         }
 
         TextView title = (TextView)convertView.findViewById(R.id.list_title);
-        TextView start_time = (TextView)convertView.findViewById(R.id.list_start);
-        TextView end_time = (TextView)convertView.findViewById(R.id.list_end);
+        TextView start_time = (TextView)convertView.findViewById(R.id.list_end);
+        TextView end_time = (TextView)convertView.findViewById(R.id.list_start);
 
         Event event = items.get(position);
 
