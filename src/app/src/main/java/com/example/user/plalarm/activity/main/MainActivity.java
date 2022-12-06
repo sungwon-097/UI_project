@@ -78,9 +78,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         day.setOnClickListener(this);
         newButton.setOnClickListener(this);
 
-        // service start
-        startService(new Intent(MainActivity.this, BackgroundService.class));
-
         TopFragment tf = new TopFragment();
         if (!tf.isVisible()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -284,83 +281,6 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
             finishAffinity();
             System.runFinalization();
             System.exit(0);
-        }
-    }
-    public void setNotification(Event event){
-
-        Log.d(TAG, "setNotification: ");
-
-        LocalDateTime eventTime = LocalDateTime.parse(event.getStartTime());
-        while(true){
-            LocalDateTime currentTime = LocalDateTime.now();
-            if (eventTime.compareTo(currentTime) == 0){
-                makeNotification(event);
-            }
-        }
-    }
-
-    public void makeNotification(Event event) {
-        String channelID = "DEFAULT";
-        createNotificationChannel(channelID, "default", NotificationManager.IMPORTANCE_HIGH);
-        createNotification(channelID, 1, event.getTitle(), event.getContent());
-        TtsService ttsService = new TtsService(this);
-        ttsService.speak(event.getTitle()); // TODO : event.getContent() 로 치환
-        pendingIntent(event.getIntentApp());
-    }
-
-    public void createNotificationChannel(String channelID, String channelName, int importance){
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(new NotificationChannel(channelID, channelName, importance));
-        }
-    }
-
-    public void createNotification(String channelID, int id, String title, String content){
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle(title)
-                .setContentText(content)
-//                .setSound()
-                .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
-
-        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(id, builder.build());
-    }
-
-    public boolean getPackageList(String appName) {
-        boolean isExist = false;
-
-        PackageManager pkgMgr = getPackageManager();
-        List<ResolveInfo> mApps;
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        mApps = pkgMgr.queryIntentActivities(mainIntent, 0);
-
-        try {
-            for (int i = 0; i < mApps.size(); i++) {
-                if(mApps.get(i).activityInfo.packageName.startsWith(appName)){
-                    isExist = true;
-                    break;
-                }
-            }
-        }
-        catch (Exception e) {
-            return false;
-        }
-        return isExist;
-    }
-
-    public void pendingIntent(String appName){
-        if(getPackageList(appName)) {
-            Intent intent = getPackageManager().getLaunchIntentForPackage(appName);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }else{
-            String url = "market://details?id=" + appName;
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
         }
     }
 }
