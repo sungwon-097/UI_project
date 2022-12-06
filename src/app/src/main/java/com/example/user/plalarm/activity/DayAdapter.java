@@ -1,5 +1,7 @@
 package com.example.user.plalarm.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +63,29 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
             title = itemView.findViewById(R.id.day_title);
             startTime = itemView.findViewById(R.id.start_time);
             endTime = itemView.findViewById(R.id.end_time);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String collectionPath = "test";
+                    Event event;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("제목");
+                    builder.setMessage("하이");
+                    builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //
+                        }
+                    });
+                    builder.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //
+                        }
+                    });
+                    builder.show();
+                }
+            });
         }
     }
 

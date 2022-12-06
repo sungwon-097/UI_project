@@ -61,10 +61,8 @@ public class Calendar_Adapter extends BaseAdapter{
         items.add(i);
     }
     public String parsing_date(String s) {
-        String result;
-        String[] date_arr, clock_arr;
-        String[] parse = s.split("T");
-        date_arr = parse[0].split("-");
+        String[] clock_arr, parse;
+        parse = s.split("T");
         clock_arr = parse[1].split(":");
         return clock_arr[0] + "시 " + clock_arr[1] + "분 ";
     }
