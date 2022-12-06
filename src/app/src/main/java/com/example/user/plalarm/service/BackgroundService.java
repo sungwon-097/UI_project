@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import static com.example.user.plalarm.config.FirebaseDataContainer.container;
+import static com.example.user.plalarm.config.FirebaseDataContainer.getFirebaseData;
 
 import android.app.Service;
 import android.content.Intent;
@@ -76,6 +77,7 @@ public class BackgroundService extends Service {
                     String thisTime= todoEvent.getStartTime().substring(0, 16);
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(BackgroundService.this);
                     boolean NOTIFICATION_MUTE_BACKGROUND = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
+                    Log.d(TAG, "onStartCommand: t2 : " + currentTime + ", " + todoEvent.getStartTime().substring(0, 16));
                     if (currentTime.equals(thisTime) && !NOTIFICATION_MUTE_BACKGROUND){
                         Intent intent1 = new Intent(BackgroundService.this, NotificationActivity.class);
                         intent1.putExtra("event", todoEvent);
@@ -83,9 +85,8 @@ public class BackgroundService extends Service {
                         startActivity(intent1);
                         break;
                     }
-                    Log.d(TAG, "onStartCommand: t2 : " + currentTime + ", " + todoEvent.getStartTime().substring(0, 16));
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -106,24 +107,5 @@ public class BackgroundService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    public void getFirebaseData(@NonNull String collectionPath){
-        FirebaseFirestore.getInstance().collection(collectionPath)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (container != null)
-                                container.clear();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                container.add(document.toObject(Event.class));
-                            }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
     }
 }

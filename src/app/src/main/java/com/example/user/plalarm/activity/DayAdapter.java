@@ -1,4 +1,4 @@
-package com.example.user.plalarm.fragment;
+package com.example.user.plalarm.activity;
 
 import android.view.LayoutInflater;
 import android.view.View;

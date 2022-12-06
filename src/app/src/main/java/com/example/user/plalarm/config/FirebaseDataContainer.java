@@ -43,4 +43,22 @@ public class FirebaseDataContainer {
                     }
                 });
     }
+    public static void getFirebaseData(@NonNull String collectionPath){
+        FirebaseFirestore.getInstance().collection(collectionPath)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (container != null)
+                                container.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                container.add(document.toObject(Event.class));
+                            }
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
 }

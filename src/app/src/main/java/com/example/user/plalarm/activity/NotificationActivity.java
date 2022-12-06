@@ -40,6 +40,9 @@ public class NotificationActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         Event event = (Event) intent.getSerializableExtra("event");
+        if (event == null)
+            finish();
+        assert event != null;
         makeNotification(event);
         super.onCreate(savedInstanceState);
     }
@@ -102,6 +105,7 @@ public class NotificationActivity extends AppCompatActivity{
         if(getPackageList(appName)) {
             Intent intent = getPackageManager().getLaunchIntentForPackage(appName);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         }else{
             String url = "market://details?id=" + appName;
