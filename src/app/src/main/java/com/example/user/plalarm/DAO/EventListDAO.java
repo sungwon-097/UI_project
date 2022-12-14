@@ -2,6 +2,8 @@ package com.example.user.plalarm.DAO;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.user.plalarm.config.UserInfo.userName;
+
 import android.util.Log;
 
 import com.example.user.plalarm.config.FirebaseDataContainer;
@@ -14,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 public class EventListDAO {
 
-    String collectionPath;
+    String collectionPath = userName;
     EventList eventList = new EventList();
     LocalDate localDate = LocalDate.now();
     String currentDate = String.valueOf(localDate).substring(0, 10);

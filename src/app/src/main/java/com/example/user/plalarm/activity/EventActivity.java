@@ -1,10 +1,10 @@
 package com.example.user.plalarm.activity;
 
-import androidx.annotation.RequiresApi;
+import static com.example.user.plalarm.config.UserInfo.userName;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +24,6 @@ public class EventActivity extends AppCompatActivity{
     LocalDateTime startDt, endDt;
     Button submitButton;
     String intentApp = "";
-    String collectionPath = "test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class EventActivity extends AppCompatActivity{
                 String endDateToString = endDt.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME);
                 Event event = new Event(title.getText().toString(), content.getText().toString(), startDateToString, endDateToString, intentApp);
                 if (finalChangeFlag){
-                    FirebaseConfig.deleteData(collectionPath, finalChangedTitle);
+                    FirebaseConfig.deleteData(userName, finalChangedTitle);
                 }
                 Intent intent = new Intent(EventActivity.this, IntentActivity.class);
                 intent.putExtra("user", event);

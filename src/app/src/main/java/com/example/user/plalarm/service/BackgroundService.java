@@ -1,10 +1,10 @@
 package com.example.user.plalarm.service;
 
 import static android.content.ContentValues.TAG;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import static com.example.user.plalarm.config.FirebaseDataContainer.container;
 import static com.example.user.plalarm.config.FirebaseDataContainer.getFirebaseData;
+import static com.example.user.plalarm.config.UserInfo.userName;
 
 import android.app.Service;
 import android.content.Intent;
@@ -13,22 +13,13 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.example.user.plalarm.activity.NotificationActivity;
-import com.example.user.plalarm.activity.main.MainActivity;
 import com.example.user.plalarm.model.Event;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.time.LocalDateTime;
 
 public class BackgroundService extends Service {
 
-    private final String collectionPath = "test";
     private Event todoEvent;
 
     public BackgroundService() {
@@ -46,12 +37,12 @@ public class BackgroundService extends Service {
         Thread t1 = new Thread("T1"){
             public synchronized void run(){
                 while(true) {
-                    getFirebaseData(collectionPath);
+                    getFirebaseData(userName);
                     if (container != null) {
                         for (Event e : container.getEventList()) {
                             if (container == null)
                                 break;
-                            Log.d(TAG, "onStartCommand: t1");
+//                            Log.d(TAG, "onStartCommand: t1");
                             LocalDateTime currentTime = LocalDateTime.now();
                             LocalDateTime thisTime = LocalDateTime.parse(e.getStartTime());
                             if (currentTime.compareTo(thisTime) <= 0) {
@@ -77,11 +68,12 @@ public class BackgroundService extends Service {
                     String thisTime= todoEvent.getStartTime().substring(0, 16);
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(BackgroundService.this);
                     boolean NOTIFICATION_MUTE_BACKGROUND = sharedPref.getBoolean("NOTIFICATION_MUTE", false);
-                    Log.d(TAG, "onStartCommand: t2 : " + currentTime + ", " + todoEvent.getStartTime().substring(0, 16));
+//                    Log.d(TAG, "onStartCommand: t2 : " + currentTime + ", " + todoEvent.getStartTime().substring(0, 16));
                     if (currentTime.equals(thisTime) && !NOTIFICATION_MUTE_BACKGROUND){
                         Intent intent1 = new Intent(BackgroundService.this, NotificationActivity.class);
                         intent1.putExtra("event", todoEvent);
-                        intent1.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent1.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(intent1);
                         todoEvent = null;
                     }

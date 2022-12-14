@@ -1,30 +1,19 @@
 package com.example.user.plalarm.activity.main;
 
-import static android.content.ContentValues.TAG;
+import static com.example.user.plalarm.config.UserInfo.userName;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -40,8 +29,6 @@ import com.example.user.plalarm.activity.Calendar_Adapter;
 import com.example.user.plalarm.fragment.TopFragment;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.model.EventList;
-import com.example.user.plalarm.service.BackgroundService;
-import com.example.user.plalarm.service.TtsService;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -53,15 +40,11 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnDateSelectedListener, View.OnClickListener {
 
-    String collectionPath = "test";
     Button week, day;
-
     ImageButton newButton;
     private long pressedTime = 0;
 
@@ -123,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         }, new DayViewDecorator() {
             @Override
             public boolean shouldDecorate(CalendarDay day) {
-                EventList data = new EventListDAO(collectionPath).getEventItems();
+                EventList data = new EventListDAO(userName).getEventItems();
                 ArrayList<String> sample = new ArrayList<>();
                 ArrayList<String> parse = new ArrayList<>();
                 for (Event e : data.getEventList()) {
@@ -163,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements OnDateSelectedLis
         Calendar_Adapter ilAdapter = new Calendar_Adapter();
         String[] date_format = getDate(date);
 
-        EventList eventList = new EventListDAO(collectionPath).getEventItems();
+        EventList eventList = new EventListDAO(userName).getEventItems();
         lv.setAdapter(ilAdapter);
         for (Event e : eventList.getEventList()) {
             String start_time = e.getStartTime();
