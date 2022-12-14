@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 
 import com.example.user.plalarm.R;
-import com.example.user.plalarm.config.FirebaseDataContainer;
 import com.example.user.plalarm.service.BackgroundService;
 
 public class LogoActivity extends AppCompatActivity {
@@ -30,7 +29,7 @@ public class LogoActivity extends AppCompatActivity {
                     Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-            }, 1500);
+            }, 2000);
         }
         else if (spinnerValue == 1) {
             new Handler().postDelayed(new Runnable() {
@@ -39,7 +38,7 @@ public class LogoActivity extends AppCompatActivity {
                     Intent intent = new Intent(LogoActivity.this, WeekViewActivity.class);
                     startActivity(intent);
                 }
-            }, 1500);
+            }, 2000);
         }
         else if (spinnerValue == 2) {
             new Handler().postDelayed(new Runnable() {
@@ -48,7 +47,7 @@ public class LogoActivity extends AppCompatActivity {
                     Intent intent = new Intent(LogoActivity.this, DayViewActivity.class);
                     startActivity(intent);
                 }
-            }, 1500);
+            }, 2000);
         }
                     Intent intent = new Intent(LogoActivity.this, MainActivity.class);
     }

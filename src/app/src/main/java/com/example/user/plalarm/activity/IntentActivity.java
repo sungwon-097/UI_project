@@ -1,6 +1,6 @@
 package com.example.user.plalarm.activity;
 
-import static android.content.ContentValues.TAG;
+import static com.example.user.plalarm.config.UserInfo.userName;
 
 import java.util.List;
 
@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +35,7 @@ public class IntentActivity extends AppCompatActivity {
     Button cancelButton;
     private List<ResolveInfo> apps;
     private PackageManager pm;
-    String collectionPath = "test";
-    private Event mEvent;
-    
+
     @SuppressLint("QueryPermissionsNeeded")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +59,7 @@ public class IntentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
                 Event event = (Event) intent.getSerializableExtra("user");
-                mEvent = event;
-                FirebaseConfig.putEventData(collectionPath, event);
+                FirebaseConfig.putEventData(userName, event);
                 Toast.makeText(act, "일정을 등록하였습니다", Toast.LENGTH_SHORT).show();
                 Intent mainIntent = new Intent(IntentActivity.this, MainActivity.class);
                 startActivity(mainIntent);
@@ -117,7 +113,7 @@ public class IntentActivity extends AppCompatActivity {
                     Event event = (Event) intent.getSerializableExtra("user");
                     event.setIntentApp(pkgName);
 
-                    FirebaseConfig.putEventData(collectionPath, event);
+                    FirebaseConfig.putEventData(userName, event);
                     Toast.makeText(act, "일정을 등록하였습니다", Toast.LENGTH_SHORT).show();
 
                     Intent mainIntent = new Intent(IntentActivity.this, MainActivity.class);

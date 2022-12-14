@@ -1,40 +1,27 @@
 package com.example.user.plalarm.activity;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.user.plalarm.R;
-import com.example.user.plalarm.config.FirebaseConfig;
-import com.example.user.plalarm.config.FirebaseDataContainer;
 import com.example.user.plalarm.model.Event;
-import com.example.user.plalarm.model.EventList;
 import com.example.user.plalarm.service.TtsService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 public class NotificationActivity extends AppCompatActivity{
-
-    Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +38,7 @@ public class NotificationActivity extends AppCompatActivity{
         String channelID = "DEFAULT";
         createNotificationChannel(channelID, "default", NotificationManager.IMPORTANCE_HIGH);
         createNotification(channelID, 1, event.getTitle(), event.getContent());
-        TtsService ttsService = new TtsService(this);
+        TtsService ttsService = new TtsService(getApplicationContext());
         ttsService.speak(event.getTitle()); // TODO : event.getContent() 로 치환
         if (!Objects.equals(event.getIntentApp(), ""))
             pendingIntent(event.getIntentApp());
@@ -60,6 +47,7 @@ public class NotificationActivity extends AppCompatActivity{
         }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     public void createNotificationChannel(String channelID, String channelName, int importance){
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -107,8 +95,6 @@ public class NotificationActivity extends AppCompatActivity{
     public void pendingIntent(String appName){
         if(getPackageList(appName)) {
             Intent intent = getPackageManager().getLaunchIntentForPackage(appName);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         }else{
             String url = "market://details?id=" + appName;

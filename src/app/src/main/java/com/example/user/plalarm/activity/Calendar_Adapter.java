@@ -34,7 +34,7 @@ public class Calendar_Adapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.event_calendar_list,parent,false);
+            convertView = inflater.inflate(R.layout.listview_calendar,parent,false);
         }
 
         TextView title = (TextView)convertView.findViewById(R.id.list_title);

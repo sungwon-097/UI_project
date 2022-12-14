@@ -16,10 +16,6 @@ public class FirebaseDataContainer {
 
     public static EventList container = new EventList();
 
-    public FirebaseDataContainer(EventList container) {
-        FirebaseDataContainer.container = container;
-    }
-
     public EventList getContainer(){
         return container;
     }

@@ -1,14 +1,13 @@
 package com.example.user.plalarm.activity.main;
 
+import static com.example.user.plalarm.config.UserInfo.userName;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -38,7 +37,6 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
     TextView current_day;
     TimetableView timetableView;
     ArrayList<Schedule> schedules = new ArrayList<Schedule>();
-    String collectionPath = "test"; // TODO : 경로를 핸들링 해야 함
 
     LocalDate localDate = LocalDate.now();
     String currentDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -48,7 +46,7 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_week_view);
+        setContentView(R.layout.activity_week);
 
         calendar = findViewById(R.id.calendar);
         day = findViewById(R.id.day);
@@ -59,45 +57,16 @@ public class WeekViewActivity extends AppCompatActivity implements View.OnClickL
         newButton.setOnClickListener(this);
 
         timetableView = (TimetableView) findViewById(R.id.timetable);
-        schedules = MakeData(new EventListDAO(collectionPath).getWeekEventItems(currentDate));
+        schedules = MakeData(new EventListDAO(userName).getWeekEventItems(currentDate));
         current_day = (TextView)findViewById(R.id.check_day);
         current_day.setText(localDate.getYear() + "년 " + localDate.getMonthValue() + "월 " + getWeekOfMonth(localDate)+"주");
 
-        // Fragment
         TopFragment tf = new TopFragment();
         if (!tf.isVisible()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container_week, tf);
             transaction.commit();
         }
-        timetableView.setOnStickerSelectEventListener(new TimetableView.OnStickerSelectedListener() {
-            @Override
-            public void OnStickerSelected(int idx, ArrayList<Schedule> schedules) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(WeekViewActivity.this);
-                //builder.setTitle(schedules.get(idx - 1).getClassTitle());
-                Log.d("check11111", idx+"");
-                for(Schedule s: schedules){
-                    Log.d("hihihihi",s + "" + idx + "") ;
-                }
-                builder.setMessage("하이");
-                builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Event event = new Event();
-//                        Intent intent = new Intent(WeekViewActivity.this, EventActivity.class);
-//                        intent.putExtra("1","1");
-
-                    }
-                });
-                builder.setNegativeButton("삭제", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //
-                    }
-                });
-                builder.show();
-            }
-        });
     }
 
     private int getWeekOfMonth(LocalDate localDate) {

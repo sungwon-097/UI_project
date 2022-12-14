@@ -1,10 +1,13 @@
 package com.example.user.plalarm.activity.main;
 
+import static com.example.user.plalarm.config.UserInfo.userName;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,10 +35,8 @@ public class DayViewActivity extends AppCompatActivity implements View.OnClickLi
 
     Button calendar, week;
     ImageButton newButton;
-
     TextView current_day;
     RecyclerView recyclerView;
-    String collectionPath = "test"; // TODO : 경로를 핸들링 해야 함
 
     private final DayAdapter adapter = new DayAdapter();
 
@@ -43,10 +44,11 @@ public class DayViewActivity extends AppCompatActivity implements View.OnClickLi
     String currentDate = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     private long pressedTime = 0;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_day_view);
+        setContentView(R.layout.activity_day);
         ArrayList<String> Week = new ArrayList<>(Arrays.asList("일요일","월요일","화요일"
                 ,"수요일","목요일","금요일","토요일","일요일"));
 
@@ -73,7 +75,7 @@ public class DayViewActivity extends AppCompatActivity implements View.OnClickLi
             transaction.replace(R.id.fragment_container_day, tf);
             transaction.commit();
         }
-        adapter.setItems(new EventListDAO(collectionPath).getDayEventItems(currentDate));
+        adapter.setItems(new EventListDAO(userName).getDayEventItems(currentDate));
     }
 
     public static String getCurrentDate(){
