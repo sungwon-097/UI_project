@@ -10,8 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-//import com.bumptech.glide.Glide;
-
 import com.example.user.plalarm.R;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.model.EventList;
@@ -28,7 +26,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.ViewHolder> {
     @Override
     public DayAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_item,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_day,parent,false);
         return new ViewHolder(itemView);
     }
 
