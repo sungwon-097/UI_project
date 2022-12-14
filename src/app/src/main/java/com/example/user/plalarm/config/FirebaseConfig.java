@@ -6,13 +6,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.example.user.plalarm.model.Event;
 import com.example.user.plalarm.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +33,8 @@ public class FirebaseConfig{
         eventEntity.put("startTime", event.getStartTime());
         eventEntity.put("endTime", event.getEndTime());
         eventEntity.put("intentApp", event.getIntentApp());
-        FirebaseFirestore.getInstance().collection(path).document(event.getStartTime()+event.getTitle()).set(eventEntity);
+        FirebaseFirestore.getInstance().collection(path).document(
+                event.getStartTime()+event.getTitle()).set(eventEntity);
     }
 
     // 컬렉션 내부의 문서 이름을 인자로 정보 삭제
